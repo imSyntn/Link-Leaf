@@ -16,31 +16,84 @@ import { IconTrash } from '@tabler/icons-react';
 
 import { urlType } from './UrlContainer'
 import { toast } from '@/hooks/use-toast'
+import axios from 'axios'
 
-export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: string, delBtn: boolean, urlObj: urlType | false }) {
+export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: string, delBtn: boolean, urlObj: urlType | null }) {
 
   const [inputData, setInputData] = useState({
-    name: '',
-    url: '',
+    siteName: '',
+    siteURL: '',
     description: ''
   })
+  const [btnClicked, setBtnClicked] = useState(false)
 
   useEffect(() => {
     if (urlObj) {
       setInputData({
-        name: urlObj.sitename,
-        url: urlObj.siteurl,
-        description: urlObj.text
+        siteName: urlObj.siteName,
+        siteURL: urlObj.siteURL,
+        description: urlObj.description
       })
     }
   }, [urlObj])
+
+  const handleSubmit = () => {
+    console.log(1)
+    setBtnClicked(true)
+    axios.post('/api/profile', inputData, { withCredentials: true })
+      .then(e => {
+        console.log(e)
+        toast({
+          title: "Saved.",
+          description: "Data saved successfully."
+        })
+      })
+      .catch(e => {
+        console.log(e)
+        toast({
+          title: "Error",
+          description: "Error occured."
+        })
+      })
+      .finally(() => setBtnClicked(false))
+  }
+
+  const handleDelete = () => {
+    // toast({
+    //   title: "Deleted",
+    //   description: "Data deleted successfully."
+    // })
+    setBtnClicked(true)
+    // if (urlObj) {
+    //   axios.delete('/api/profile', {
+    //     data: { id: urlObj.id }
+    //   })
+    //     .then(e => {
+    //       console.log(e)
+    //       toast({
+    //         title: "Saved.",
+    //         description: "Data saved successfully."
+    //       })
+    //     })
+    //     .catch(e => {
+    //       console.log(e)
+    //       toast({
+    //         title: "Error",
+    //         description: "Error occured."
+    //       })
+    //     })
+    //     .finally(() => setBtnClicked(false))
+    // }
+
+    setTimeout(() => setBtnClicked(false), 2000)
+  }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" className="border-white bg-white text-black">{buttonText}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px]" style={btnClicked ? { opacity: 0.5 } : {}}>
         <DialogHeader>
           <DialogTitle>{buttonText}</DialogTitle>
           {/* <DialogDescription>
@@ -52,13 +105,13 @@ export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: st
             <Label htmlFor="name" className="text-right">
               Site Name
             </Label>
-            <Input id="name" value={inputData.name} onChange={(e) => setInputData(prev => ({ ...prev, name: e.target.value }))} className="w-full" />
+            <Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" />
           </div>
           <div className="flex justify-between items-center">
             <Label htmlFor="url" className="text-right">
               Site URL
             </Label>
-            <Input id="url" value={inputData.url} onChange={(e) => setInputData(prev => ({ ...prev, url: e.target.value }))} className="w-full" />
+            <Input id="url" value={inputData.siteURL} onChange={(e) => setInputData(prev => ({ ...prev, siteURL: e.target.value }))} className="w-full" />
           </div>
           <div className="flex justify-between items-center">
             <Label htmlFor="Description" className="text-right">
@@ -70,19 +123,9 @@ export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: st
         <DialogFooter>
           <div className={`flex justify-between ${delBtn ? 'w-full' : ''}`}>
             {
-              delBtn && <Button className="bg-red-400 hover:bg-red-600" onClick={() => 
-                toast({
-                  title: "Deleted",
-                  description: "Data deleted successfully."
-                })
-                }><IconTrash /></Button>
+              delBtn && <Button className="bg-red-400 hover:bg-red-600" onClick={handleDelete} disabled={btnClicked ? true : false}><IconTrash /></Button>
             }
-            <Button type="submit" onClick={() =>
-              toast({
-                title: "Saved.",
-                description: "Data saved successfully."
-              })
-            }>Save</Button>
+            <Button type="submit" onClick={handleSubmit} disabled={btnClicked ? true : false}>Save</Button>
           </div>
         </DialogFooter>
       </DialogContent>

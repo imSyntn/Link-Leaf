@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { UserContextProvider } from './UserContext'
 import { Navbar } from "@/components/NavBar";
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { Toaster } from "@/components/ui/toaster";
@@ -38,7 +39,11 @@ export default function RootLayout({
         </h1>
         <Navbar />
         <HeroHighlight containerClassName="h-[100vh]">
-          {children}
+
+          <UserContextProvider>
+            {children}
+          </UserContextProvider>
+
         </HeroHighlight>
 
         <Toaster />
