@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     try {
         const newUser = await prisma.user.create({
             data: {
-                name: firstName + lastName,
+                name: firstName + " " + lastName,
                 email,
                 userName,
                 password: hashedPassword
@@ -40,11 +40,11 @@ export async function POST(request: NextRequest) {
 
     } catch (error: any) {
         console.log(0)
-        console.log(error)
+        console.log(error.message)
         await prisma.$disconnect()
         return NextResponse.json({
             status: 400,
-            msg: error.message
+            msg: 'Error Occured.'
         })
     }
 }

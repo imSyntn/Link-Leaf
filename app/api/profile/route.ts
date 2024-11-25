@@ -23,8 +23,8 @@ export async function GET(request: NextRequest) {
 
             } catch (e) {
                 return NextResponse.json({
-                    status: 400,
-                    msg: 'User not valid.'
+                    status: 500,
+                    msg: 'Error occured.'
                 })
             }
         } else {
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
                         siteURL,
                         description,
                         author: {
-                            connect: {id}
+                            connect: { id }
                         }
                     }
                 })
@@ -65,8 +65,8 @@ export async function POST(request: NextRequest) {
 
             } catch (e) {
                 return NextResponse.json({
-                    status: 400,
-                    msg: 'User not valid.'
+                    status: 500,
+                    msg: 'Error occured.'
                 })
             }
         } else {
@@ -83,6 +83,87 @@ export async function POST(request: NextRequest) {
     }
 }
 
+const checkFields = (siteName: string, siteURL: string, description: string) => {
+    const obj : {
+        siteName?: string,
+        siteURL?: string,
+        description?: string
+    } = {}
+    if (siteName != '') {
+        obj.siteName = siteName
+    }
+    if (siteURL != '') {
+        obj.siteURL = siteURL
+    }
+    if (description != '') {
+        obj.description = description
+    }
+    return obj;
+}
+
+export async function PATCH(request: NextRequest) {
+    const searchParams = request.nextUrl.searchParams;
+    const id = searchParams.get('linkId')
+
+    const { siteName, siteURL, description } = await request.json()
+    const updates = checkFields(siteName, siteURL, description);
+
+    if (!id) {
+        return NextResponse.json({
+            status: 200,
+            msg: 'Id not valid.'
+        })
+    } else {
+        try {
+            const updatedLink = await prisma.link.update({
+                where: {
+                    id: parseInt(id)
+                },
+                data: updates
+            })
+            return NextResponse.json({
+                status: 200,
+                msg: 'Updated Successfully.'
+            })
+
+        } catch (error: any) {
+            console.log(error.message)
+            return NextResponse.json({
+                status: 500,
+                msg: 'Error occured.'
+            })
+        }
+    }
+}
+
 export async function DELETE(request: NextRequest) {
-    
+    const seatchParams = request.nextUrl.searchParams
+    const id = seatchParams.get('id')
+
+    if (!id) {
+        return NextResponse.json({
+            status: 200,
+            msg: 'Id not valid.'
+        })
+    } else {
+        try {
+            const deletedLink = await prisma.link.delete({
+                where: {
+                    id: parseInt(id)
+                }
+            })
+            console.log(deletedLink)
+            return NextResponse.json({
+                status: 200,
+                msg: 'Deleted Successfully.'
+            })
+
+        } catch (error: any) {
+            console.log(error.message)
+            return NextResponse.json({
+                status: 500,
+                msg: 'Error occuted'
+            })
+        }
+    }
 }

@@ -18,7 +18,7 @@ import { urlType } from './UrlContainer'
 import { toast } from '@/hooks/use-toast'
 import axios from 'axios'
 
-export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: string, delBtn: boolean, urlObj: urlType | null }) {
+export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate }: { buttonText: string, delBtn: boolean, urlObj: urlType | null, changeUpdate: () => void }) {
 
   const [inputData, setInputData] = useState({
     siteName: '',
@@ -43,10 +43,18 @@ export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: st
     axios.post('/api/profile', inputData, { withCredentials: true })
       .then(e => {
         console.log(e)
-        toast({
-          title: "Saved.",
-          description: "Data saved successfully."
-        })
+        if (e.data.status == 400) {
+          toast({
+            title: "Error",
+            description: "Error occured."
+          })
+        } else {
+          toast({
+            title: "Saved.",
+            description: "Data saved successfully."
+          })
+          changeUpdate()
+        }
       })
       .catch(e => {
         console.log(e)
@@ -58,34 +66,70 @@ export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: st
       .finally(() => setBtnClicked(false))
   }
 
+  const handleUpdate = () => {
+    setBtnClicked(true)
+    if (urlObj) {
+      axios.patch(`/api/profile?linkId=${urlObj.id}`, inputData)
+        .then(e => {
+          console.log(e)
+          if (e.data.status == 400) {
+            toast({
+              title: "Error",
+              description: "Error occured."
+            })
+          } else {
+            toast({
+              title: "Updated.",
+              description: "Data Updated successfully."
+            })
+            changeUpdate()
+          }
+        })
+        .catch(e => {
+          console.log(e)
+          toast({
+            title: "Error",
+            description: "Error occured."
+          })
+        })
+        .finally(() => setBtnClicked(false))
+    }
+  }
+
   const handleDelete = () => {
     // toast({
     //   title: "Deleted",
     //   description: "Data deleted successfully."
     // })
     setBtnClicked(true)
-    // if (urlObj) {
-    //   axios.delete('/api/profile', {
-    //     data: { id: urlObj.id }
-    //   })
-    //     .then(e => {
-    //       console.log(e)
-    //       toast({
-    //         title: "Saved.",
-    //         description: "Data saved successfully."
-    //       })
-    //     })
-    //     .catch(e => {
-    //       console.log(e)
-    //       toast({
-    //         title: "Error",
-    //         description: "Error occured."
-    //       })
-    //     })
-    //     .finally(() => setBtnClicked(false))
-    // }
-
-    setTimeout(() => setBtnClicked(false), 2000)
+    if (urlObj) {
+      axios.delete('/api/profile', {
+        params: { id: urlObj.id }
+      })
+        .then(e => {
+          console.log(e)
+          if (e.data.status == 400) {
+            toast({
+              title: "Error",
+              description: "Error occured."
+            })
+          } else {
+            toast({
+              title: "Deleted.",
+              description: "Data Deleted successfully."
+            })
+            changeUpdate()
+          }
+        })
+        .catch(e => {
+          console.log(e)
+          toast({
+            title: "Error",
+            description: "Error occured."
+          })
+        })
+        .finally(() => setBtnClicked(false))
+    }
   }
 
   return (
@@ -125,7 +169,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj }: { buttonText: st
             {
               delBtn && <Button className="bg-red-400 hover:bg-red-600" onClick={handleDelete} disabled={btnClicked ? true : false}><IconTrash /></Button>
             }
-            <Button type="submit" onClick={handleSubmit} disabled={btnClicked ? true : false}>Save</Button>
+            <Button type="submit" onClick={urlObj ? handleUpdate : handleSubmit} disabled={btnClicked ? true : false}>{urlObj ? 'Update' : 'Save'}</Button>
           </div>
         </DialogFooter>
       </DialogContent>
