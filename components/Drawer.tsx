@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
     Drawer,
@@ -19,28 +19,73 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { useToast } from "@/hooks/use-toast"
+import axios from "axios"
+import { useUserContext } from "@/app/UserContext"
 
-export default function DrawerComp() {
+
+export default function DrawerComp({changeUpdate}: {changeUpdate: ()=> void}) {
 
     const [loading, setLoading] = useState(false)
     const cancelBtn = useRef<HTMLButtonElement>(null)
+    const otpRef = useRef<React.ElementRef<typeof InputOTP>>(null)
+
+    const {setUser} = useUserContext()
 
     const { toast } = useToast()
 
     const sendOTP = () => {
+        console.log(22222222)
         setLoading(true)
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 3000)
+        axios.get('/api/profile/varification', { withCredentials: true }).then((e) => {
+            if (e.data.status === 400) {
+                toast({
+                    title: 'Error.',
+                    description: e.data.msg
+                })
+                cancelBtn.current?.click()
+            } else {
+                setLoading(false)
+            }
+        })
+            .catch(e => {
+                toast({
+                    title: 'Error',
+                    description: 'Error occured'
+                })
+            })
     }
 
     const varifyOTP = () => {
+        console.log(111111111)
         toast({
-            title: 'Varified',
-            description: 'OTP varification successful.'
+            title: 'Varifying.',
+            description: 'Varification in progress.'
         })
-        cancelBtn.current?.click()
+        axios.post('/api/profile/varification', {
+            otp: otpRef.current?.value
+        }, { withCredentials: true })
+        .then((e)=> {
+            console.log(e.data)
+            if(e.data.status == 400) {
+                toast({
+                    title: 'Error',
+                    description: 'Invalid OTP.'
+                })
+            } else {
+                if(e.data.varified) {
+                    setUser(prev=> ({...prev, isVarified: true}))
+                    toast({
+                        title: 'Successful.',
+                        description: 'OTP varification successful.'
+                    })
+                }
+            }
+        }).catch((e)=> {
+            toast({
+                title: 'Error',
+                description: 'Error Occured.'
+            })
+        })
     }
 
     return (
@@ -61,7 +106,7 @@ export default function DrawerComp() {
                             loading ? (
                                 <p className="text-lg">Sending Email . . .</p>
                             ) : (
-                                <InputOTP maxLength={6}>
+                                <InputOTP maxLength={6} ref={otpRef}>
                                     <InputOTPGroup>
                                         <InputOTPSlot className="border-gray-500 w-12 h-12" index={0} />
                                         <InputOTPSlot className="border-gray-500 w-12 h-12" index={1} />

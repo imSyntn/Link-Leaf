@@ -91,7 +91,7 @@ const Profile = () => {
             <div className="text flex flex-col items-center">
               <p className='ml-3 flex items-center text-white text-[1.1rem]'>{user.name} {
                 user.isVarified ? (
-                  <IconRosetteDiscountCheckFilled className=' ml-1' />
+                  <IconRosetteDiscountCheckFilled className='text-blue-500 ml-1' />
                 ) : (
                   <IconProgressAlert className='text-red-400 ml-1' />
                 )
@@ -99,7 +99,7 @@ const Profile = () => {
               {
                 // <button className='bg-white text-black px-2 py-1 font-medium text-sm mt-1' onClick={handleVarification}>Get Varified</button>
 
-                !user.isVarified && <DrawerComp />
+                !user.isVarified && <DrawerComp changeUpdate={changeUpdate} />
               }
             </div>
 

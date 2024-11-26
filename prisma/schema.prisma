@@ -21,6 +21,7 @@ model User {
   password   String
   isVarified Boolean @default(false)
   links      Link[]
+  otp        String?
 }
 
 model Link {

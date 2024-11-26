@@ -28,7 +28,8 @@ export async function POST(request: NextRequest) {
                     name: isAvailable.name,
                     id: isAvailable.id,
                     userName: isAvailable.userName,
-                    email: isAvailable.email
+                    email: isAvailable.email,
+                    isVarified: isAvailable.isVarified
                 })
                 response.cookies.set('token', token, { secure: true, httpOnly: true })
                 return response
