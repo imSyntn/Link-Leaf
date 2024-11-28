@@ -12,7 +12,7 @@ const UrlCard = ({ urlObj, changeUpdate }: { urlObj: urlType, changeUpdate: ()=>
       </td>
       <td className='px-6 py-4'>{urlObj.description}</td>
       <td className='px-6 py-4 text-right w-10'>
-        <AddLink buttonText="Edit" delBtn urlObj={urlObj} changeUpdate={changeUpdate} />
+        <AddLink buttonText="Edit" delBtn urlObj={urlObj} changeUpdate={changeUpdate} editProfile={false} />
         {/* <IconTrash /> */}
       </td>
     </tr>

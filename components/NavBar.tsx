@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import { usePathname } from "next/navigation";
 
@@ -29,9 +29,14 @@ export function Navbar() {
       link: "/profile",
     }
   ];
+
   return (
     <div className="relative  w-full">
-      <FloatingNav navItems={navItems} pathname={pathname} />
+      {
+        (pathname !== '/share') && (
+          <FloatingNav navItems={navItems} pathname={pathname} className="min-h-[55.2px]" />
+        )
+      }
     </div>
   );
 }

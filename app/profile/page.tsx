@@ -7,7 +7,7 @@ import UrlContainer, { urlType } from '@/components/UrlContainer'
 import axios from 'axios'
 import { IconProgressAlert, IconRosetteDiscountCheckFilled } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation'
-import { Drawer } from 'vaul'
+// import { Drawer } from 'vaul'
 import DrawerComp from '@/components/Drawer'
 
 // import { ToastAction } from '@/components/ui/toast'
@@ -105,10 +105,10 @@ const Profile = () => {
 
             {/* </p> */}
           </div>
-          <AddLink buttonText="Edit Profile" delBtn={true} urlObj={null} changeUpdate={changeUpdate} />
+          <AddLink buttonText="Edit Profile" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={true} />
         </div>
         <div className="userLinks flex flex-col items-center">
-          <AddLink buttonText="Add New" delBtn={false} urlObj={null} changeUpdate={changeUpdate} />
+          <AddLink buttonText="Add New" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={false} />
           <UrlContainer changeUpdate={changeUpdate} loading={loading} userLinks={userLinks} />
         </div>
       </div>

@@ -17,14 +17,17 @@ import { IconTrash } from '@tabler/icons-react';
 import { urlType } from './UrlContainer'
 import { toast } from '@/hooks/use-toast'
 import axios from 'axios'
+import { Textarea } from './ui/textarea'
+import { Dropdown } from './Dropdown'
 
-export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate }: { buttonText: string, delBtn: boolean, urlObj: urlType | null, changeUpdate: () => void }) {
+export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, editProfile }: { buttonText: string, delBtn: boolean, urlObj: urlType | null, changeUpdate: () => void, editProfile: boolean }) {
 
   const [inputData, setInputData] = useState({
     siteName: '',
     siteURL: '',
     description: ''
   })
+  const [custom, setCustom] = useState(false)
   const [btnClicked, setBtnClicked] = useState(false)
 
   useEffect(() => {
@@ -37,23 +40,42 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate }: { 
     }
   }, [urlObj])
 
-  const handleSubmit = () => {
-    console.log(1)
-    setBtnClicked(true)
-    axios.post('/api/profile', inputData, { withCredentials: true })
+  useEffect(()=> {
+    if(!editProfile) {
+      if(inputData.siteName === 'Custom') {
+        setCustom(true)
+      }
+    }
+  },[inputData])
+
+  const setValue = (name:string) => {
+    setInputData(prev => ({ ...prev, siteName: name }))
+  }
+
+  const handleProfileEdit = () => {
+    console.log('edit')
+    axios.patch('/api/profile/update', {
+      name: inputData.siteName,
+      description: inputData.description
+    }, { withCredentials: true })
       .then(e => {
         console.log(e)
-        if (e.data.status == 400) {
+        if (e.data.status == 400 || e.data.status) {
           toast({
             title: "Error",
             description: "Error occured."
           })
         } else {
           toast({
-            title: "Saved.",
-            description: "Data saved successfully."
+            title: "Updated.",
+            description: "Updated successfully."
           })
           changeUpdate()
+          setInputData({
+            siteName: '',
+            siteURL: '',
+            description: ''
+          })
         }
       })
       .catch(e => {
@@ -64,6 +86,45 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate }: { 
         })
       })
       .finally(() => setBtnClicked(false))
+  }
+
+  const handleSubmit = () => {
+    console.log(1)
+    setBtnClicked(true)
+    if (editProfile) {
+      handleProfileEdit()
+    } else {
+      axios.post('/api/profile', inputData, { withCredentials: true })
+        .then(e => {
+          console.log(e)
+          if (e.data.status == 400) {
+            toast({
+              title: "Error",
+              description: "Error occured."
+            })
+          } else {
+            toast({
+              title: "Saved.",
+              description: "Data saved successfully."
+            })
+            changeUpdate()
+            setInputData({
+              siteName: '',
+              siteURL: '',
+              description: ''
+            })
+            setCustom(false)
+          }
+        })
+        .catch(e => {
+          console.log(e)
+          toast({
+            title: "Error",
+            description: "Error occured."
+          })
+        })
+        .finally(() => setBtnClicked(false))
+    }
   }
 
   const handleUpdate = () => {
@@ -83,6 +144,11 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate }: { 
               description: "Data Updated successfully."
             })
             changeUpdate()
+            setInputData({
+              siteName: '',
+              siteURL: '',
+              description: ''
+            })
           }
         })
         .catch(e => {
@@ -119,6 +185,11 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate }: { 
               description: "Data Deleted successfully."
             })
             changeUpdate()
+            setInputData({
+              siteName: '',
+              siteURL: '',
+              description: ''
+            })
           }
         })
         .catch(e => {
@@ -147,21 +218,34 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate }: { 
         <div className="grid gap-4 py-4">
           <div className="flex justify-between items-center">
             <Label htmlFor="name" className="text-right">
-              Site Name
+              {
+                editProfile ? 'Name' : 'Site Name'
+              }
             </Label>
-            <Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" />
+            {
+              (editProfile && !custom && !urlObj) ? <Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" /> : (!editProfile && !custom && !urlObj) ? (
+                <Dropdown value={inputData.siteName} setValue={setValue} />
+              ) : (<Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" />)
+            } 
+            {/* {
+              (custom) && <Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" />
+            } */}
           </div>
-          <div className="flex justify-between items-center">
-            <Label htmlFor="url" className="text-right">
-              Site URL
-            </Label>
-            <Input id="url" value={inputData.siteURL} onChange={(e) => setInputData(prev => ({ ...prev, siteURL: e.target.value }))} className="w-full" />
-          </div>
+          {
+            !editProfile && <div className="flex justify-between items-center">
+              <Label htmlFor="url" className="text-right">
+                Site URL
+              </Label>
+              <Input id="url" value={inputData.siteURL} onChange={(e) => setInputData(prev => ({ ...prev, siteURL: e.target.value }))} className="w-full" />
+            </div>
+          }
           <div className="flex justify-between items-center">
             <Label htmlFor="Description" className="text-right">
               Description
             </Label>
-            <Input id="Description" value={inputData.description} onChange={(e) => setInputData(prev => ({ ...prev, description: e.target.value }))} className="w-full" />
+            {
+              editProfile ? <Textarea className='w-[184px]  bg-gray-50 dark:bg-zinc-800' onChange={(e) => setInputData(prev => ({ ...prev, description: e.target.value }))} /> :<Input id="Description" value={inputData.description} onChange={(e) => setInputData(prev => ({ ...prev, description: e.target.value }))} className="w-full" />
+            }
           </div>
         </div>
         <DialogFooter>
