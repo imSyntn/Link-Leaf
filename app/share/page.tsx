@@ -3,13 +3,15 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import axios from 'axios'
-import { useToast } from '@/hooks/use-toast'
+// import { useToast } from '@/hooks/use-toast'
 import { dropdownValue } from '@/lib/DropdownValue'
-import { FaXTwitter as Twitter, FaInstagram as Instagram } from "react-icons/fa6";
+import { FaXTwitter as Twitter, FaInstagram as Instagram, FaShare } from "react-icons/fa6";
 import { FiYoutube as Youtube } from "react-icons/fi";
 import { BsTiktok as Tiktok } from "react-icons/bs";
 import { BiLogoLinkedin as Linkedin } from "react-icons/bi";
+import { AiOutlineSpotify as Spotify } from "react-icons/ai";
 import { motion } from 'framer-motion'
+import { ShareBtn } from '@/components/ShareButton'
 
 interface linkType {
   id: number,
@@ -30,7 +32,7 @@ const Share = () => {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
 
-  const { toast } = useToast()
+  // const { toast } = useToast()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [data, setData] = useState<any>({
@@ -57,6 +59,13 @@ const Share = () => {
         "siteName": "Neon",
         "siteURL": "https://neon.tech",
         "description": "Posrgress server",
+        "userId": 21
+      },
+      {
+        "id": 17,
+        "siteName": "Spotify",
+        "siteURL": "https://open.spotify.com/",
+        "description": "Spotify",
         "userId": 21
       },
       {
@@ -88,7 +97,7 @@ const Share = () => {
         "userId": 21
       },
       {
-        "id": 15,
+        "id": 16,
         "siteName": "Linktree",
         "siteURL": "https://linktr.ee/",
         "description": "asasdas",
@@ -129,7 +138,6 @@ const Share = () => {
     },
   };
 
-
   const itemVariants = {
     hidden: { scale: 0, opacity: 0 },
     visible: {
@@ -137,7 +145,19 @@ const Share = () => {
       opacity: 1,
       transition: {
         type: "spring",
-        stiffness: 100,
+        stiffness: 50,
+        damping: 10
+      }
+    },
+  };
+
+  const divItemVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 50,
         damping: 10
       }
     },
@@ -154,6 +174,8 @@ const Share = () => {
       return Tiktok
     } else if (name == 'linkedin') {
       return Linkedin
+    } else if (name == 'spotify') {
+      return Spotify
     } else return null
   }
 
@@ -177,38 +199,45 @@ const Share = () => {
                     <h1 className='text-3xl my-3'>{data.name}</h1>
                     <p className='text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus ut similique voluptas doloremque nostrum, dolor maiores quis vero quia. Quisquam cupiditate harum nostrum veniam ut deleniti blanditiis. Officia, facilis delectus! Alias excepturi fugiat dolore temporibus deserunt. Excepturi adipisci debitis ipsam, dolorum cupiditate id dolore quaerat placeat neque odit magnam sunt?</p>
                   </div>
-                  <motion.div className="w-full px-10 flex justify-center my-5" variants={containerVariants} initial='hidden' animate='visible'>
-                    {
-                      data.links?.map((item: linkType, index: number) => {
-                        if (dropdownValue.slice(0, dropdownValue.length - 1).find((dropData) => {
-                          return dropData.value.toLowerCase() == item.siteName.toLowerCase()
-                        })) {
-                          const Icon = iconSelect(item.siteName.toLowerCase()) as React.ElementType
-                          return <motion.a key={index} href={item.siteURL} target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex justify-center items-center rounded-full  mx-1 shadow-md bg-gradient-to-br bg-[linear-gradient(135deg,_#f5f7fa_0%,_#c3cfe2_100%)] " variants={itemVariants} whileHover={{ scale: 1.2 }}>{<Icon className='text-black text-2xl' />}</motion.a>
-                        }
-                      })
-                    }
+                  <motion.div variants={containerVariants} initial='hidden' animate='visible'>
+                    <div className="w-full px-10 flex justify-center my-5">
+                      {
+                        data.links?.map((item: linkType, index: number) => {
+                          if (dropdownValue.slice(0, dropdownValue.length - 1).find((dropData) => {
+                            return dropData.value.toLowerCase() == item.siteName.toLowerCase()
+                          })) {
+                            const Icon = iconSelect(item.siteName.toLowerCase()) as React.ElementType
+                            return <motion.a key={item.id} href={item.siteURL} target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex justify-center items-center rounded-full mx-1 shadow-md bg-gradient-to-br from-[#f5f7fa] to-[#c3cfe2]" variants={itemVariants} whileHover={{ scale: 1.2 }}>{<Icon className='text-black text-2xl' />}</motion.a>
+                          }
+                        })
+                      }
+                    </div>
+                    <div className="flex flex-col px-10">
+                      {
+                        data.links?.map((item: linkType, index: number) => {
+                          if (!dropdownValue.slice(0, dropdownValue.length - 1).find((dropData) => {
+                            return dropData.value.toLowerCase() == item.siteName.toLowerCase()
+                          })) {
+                            return <motion.div key={item.id} className='relative flex items-center justify-between my-1 border border-gray-500 rounded-sm p-3 cursor-pointer' variants={divItemVariants}>
+                              <a href={item.siteURL} target='_blank' className=' w-[100%] flex items-center justify-between border border-blue-200 '>
+                                <img src={`https://www.google.com/s2/favicons?domain=${item.siteURL}&sz=128`} alt={item.siteName} className='w-10 h-10 rounded-sm' />
+                                <p className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>{item.description}</p>
+                              </a>
+                              <div className='border border-red-50 w-[70px]'>
+                                <ShareBtn header={''} description={''} link={''} />
+                              </div>
+                            </motion.div>
+                          }
+                        })
+                      }
+                    </div>
                   </motion.div>
-                  <div className="flex flex-col px-10">
-                    {
-                      data.links?.map((item: linkType, index: number) => {
-                        if (!dropdownValue.slice(0, dropdownValue.length - 1).find((dropData) => {
-                          return dropData.value.toLowerCase() == item.siteName.toLowerCase()
-                        })) {
-                          return <div className='flex items-center'>
-                            <img src={`https://www.google.com/s2/favicons?domain=${item.siteURL}&sz=128`} alt={item.siteName} className='w-10 h-10' />
-                            <p>{item.siteName}</p>
-                          </div>
-                        }
-                      })
-                    }
-                  </div>
                 </>
               )
             }
           </>
         ) : (
-          <p>Loading...</p>
+          <p className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-nowrap text-xl'>Please provide an ID ...</p>
         )
       }
     </div>

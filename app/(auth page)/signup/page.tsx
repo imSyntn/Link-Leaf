@@ -51,7 +51,8 @@ export default function SignupForm() {
             setUser({
               name: e.data.name,
               isLoggedin: true,
-              isVarified: e.data.isVarified
+              isVarified: e.data.isVarified,
+              id: e.data.id
             })
             router.push('/profile')
           }

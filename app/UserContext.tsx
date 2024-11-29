@@ -5,7 +5,8 @@ import { ReactNode, createContext, useContext, useState, SetStateAction, Dispatc
 export interface userType {
     name: string,
     isLoggedin: boolean,
-    isVarified: boolean
+    isVarified: boolean,
+    id: number | null
 }
 
 interface userContextPropType {
@@ -20,7 +21,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<userType>({
         name: '',
         isLoggedin: false,
-        isVarified: false
+        isVarified: false,
+        id: null
     })
 
     return (

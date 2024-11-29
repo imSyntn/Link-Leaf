@@ -9,6 +9,7 @@ import { IconProgressAlert, IconRosetteDiscountCheckFilled } from '@tabler/icons
 import { useRouter } from 'next/navigation'
 // import { Drawer } from 'vaul'
 import DrawerComp from '@/components/Drawer'
+import { ShareBtn } from '@/components/ShareButton'
 
 // import { ToastAction } from '@/components/ui/toast'
 
@@ -30,7 +31,8 @@ const Profile = () => {
       setUser({
         name: '',
         isLoggedin: false,
-        isVarified: false
+        isVarified: false,
+        id: null
       })
       toast({
         title: "Logged out.",
@@ -79,7 +81,7 @@ const Profile = () => {
     !user.isLoggedin ? (
       <p className='text-2xl  tracking-widest text-center pt-10'>You are being redirected ...</p>
     ) : (
-      <div className='Profile h-[100vh] pt-28'>
+      <div className='Profile h-[100vh] pt-28 px-6 w-[100vw]'>
         <button className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent ${btnClicked ? 'opacity-50' : ''}`} onClick={handleLogOut} style={!user.isLoggedin ? { display: 'none' } : {}} disabled={btnClicked ? true : false}>
           Log out
         </button>
@@ -107,8 +109,11 @@ const Profile = () => {
           </div>
           <AddLink buttonText="Edit Profile" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={true} />
         </div>
-        <div className="userLinks flex flex-col items-center">
-          <AddLink buttonText="Add New" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={false} />
+        <div className="userLinks flex flex-col items-center w-full">
+          <div className='flex w-full justify-center'>
+            <AddLink buttonText="Add New" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={false} />
+            <ShareBtn header='Profile' description='Share all your social links in one place with dynamic animations and a clean interface.' link={`${window.location.origin}/share?id=${user.id}`} />
+          </div>
           <UrlContainer changeUpdate={changeUpdate} loading={loading} userLinks={userLinks} />
         </div>
       </div>

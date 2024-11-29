@@ -21,7 +21,7 @@ const UrlContainer = ({ changeUpdate, loading, userLinks }: { changeUpdate: () =
   }, [userLinks])
 
   return (
-    <div className={`h-full w-[100vw] border-2 border-gray-700 mt-6 relative overflow-x-auto shadow-md sm:rounded-lg ${user.isLoggedin ? '' : 'border-none'}`}>
+    <div className={`max-h-[56vh] overflow-y-auto w-full border-2 border-gray-700 mt-6 relative overflow-x-auto shadow-md sm:rounded-lg ${user.isLoggedin ? '' : 'border-none'}`}>
       {/* {
         !user.isLoggedin ? (
           <p className='text-2xl  tracking-widest text-center pt-10'>You are being redirected ...</p>

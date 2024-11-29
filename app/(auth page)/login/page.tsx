@@ -47,7 +47,8 @@ export default function LogInForm() {
             setUser({
               name: data.name,
               isLoggedin: true,
-              isVarified: data.isVarified
+              isVarified: data.isVarified,
+              id: data.id
             })
             router.push('/profile')
           }

@@ -44,7 +44,7 @@ export default function RootLayout({
           </Highlight>
         </h1></Link>
         <Navbar />
-        <HeroHighlight containerClassName="h-[100vh]">
+        <HeroHighlight containerClassName="">
 
           <UserContextProvider>
             {children}

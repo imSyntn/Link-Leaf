@@ -18,6 +18,9 @@ export const dropdownValue = [
     {
       value: "Linkedin",
       label: "Linkedin",
+    },{
+      value: "Spotify",
+      label: "Spotify",
     },
     {
       value: "Custom",
