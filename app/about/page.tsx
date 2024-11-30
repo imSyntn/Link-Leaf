@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 const AboutPage = () => {
   return (
-    <div className=''>
+    <div className='h-[100vh] flex justify-center items-center p-5'>
       <motion.h1
         initial={{
           opacity: 0,
@@ -18,7 +18,7 @@ const AboutPage = () => {
           duration: 0.5,
           ease: [0.4, 0.0, 0.2, 1],
         }}
-        className="text-xl px-4 md:text-2xl lg:text-3xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
+        className="text-md px-4 md:text-2xl lg:text-3xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
       >
         Welcome to <Highlight className="text-black dark:text-white text-nowrap">
           Link leaf

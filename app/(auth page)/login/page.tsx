@@ -35,7 +35,7 @@ export default function LogInForm() {
         axios.post('/api/login', {
           email: emailVal,
           password: passwordVal
-        }, {withCredentials: true}).then(e => {
+        }, { withCredentials: true }).then(e => {
           const data = e.data
           if (data.status === 400) {
             toast({
@@ -84,33 +84,35 @@ export default function LogInForm() {
   }
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black" style={btnClicked ? {opacity: 0.5} : {}}>
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Login to your account
-      </h2>
-      <form className="mt-8 w-80" onSubmit={handleSubmit}>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" ref={emailRef} />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="password">Enter Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" ref={passwordRef} />
-        </LabelInputContainer>
+    <div className="h-[100vh] flex justify-center items-center">
+      <div className="w-auto mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black" style={btnClicked ? { opacity: 0.5 } : {}}>
+        <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
+          Login to your account
+        </h2>
+        <form className="mt-8 w-80" onSubmit={handleSubmit}>
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="email">Email Address</Label>
+            <Input id="email" placeholder="projectmayhem@fc.com" type="email" ref={emailRef} />
+          </LabelInputContainer>
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="password">Enter Password</Label>
+            <Input id="password" placeholder="••••••••" type="password" ref={passwordRef} />
+          </LabelInputContainer>
 
-        <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit" 
-          disabled={btnClicked ? true : false}
-        >
-          Log in &rarr;
-          <BottomGradient />
-        </button>
+          <button
+            className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+            type="submit"
+            disabled={btnClicked ? true : false}
+          >
+            Log in &rarr;
+            <BottomGradient />
+          </button>
 
-        <div className="loginDiv mt-4">
-          <p>Have an Accocunt? <Link href={'/signup'} className="text-blue-600">Sign up</Link></p>
-        </div>
-      </form>
+          <div className="loginDiv mt-4">
+            <p>Have an Accocunt? <Link href={'/signup'} className="text-blue-600">Sign up</Link></p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

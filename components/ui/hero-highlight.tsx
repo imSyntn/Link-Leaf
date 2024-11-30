@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
 import React from "react";
+import Footer from "../Footer";
 
 export const HeroHighlight = ({
   children,
@@ -29,7 +30,7 @@ export const HeroHighlight = ({
   return (
     <div
       className={cn(
-        "relative h-[100vh] flex items-center bg-white dark:bg-black justify-center w-full group  p-0",
+        "relative h-auto flex items-center bg-white dark:bg-black justify-center w-full group p-0",
         containerClassName
       )}
       onMouseMove={handleMouseMove}
@@ -55,7 +56,10 @@ export const HeroHighlight = ({
         }}
       />
 
-      <div className={cn("relative z-20", className)}>{children}</div>
+      <div className={cn("relative z-20 w-full", className)}>
+        {children}
+        <Footer />
+      </div>
     </div>
   );
 };

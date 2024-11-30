@@ -78,46 +78,50 @@ const Profile = () => {
 
   return (
 
-    !user.isLoggedin ? (
-      <p className='text-2xl  tracking-widest text-center pt-10'>You are being redirected ...</p>
-    ) : (
-      <div className='Profile h-[100vh] pt-28 px-6 w-[100vw]'>
-        <button className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent ${btnClicked ? 'opacity-50' : ''}`} onClick={handleLogOut} style={!user.isLoggedin ? { display: 'none' } : {}} disabled={btnClicked ? true : false}>
-          Log out
-        </button>
+    <div className="min-h-[100vh] flex justify-center items-center">
+      {
+        !user.isLoggedin ? (
+          <p className='text-2xl  tracking-widest text-center pt-10'>You are being redirected ...</p>
+        ) : (
+          <div className='Profile h-auto pt-24 px-6 w-[100vw]'>
+            <button className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent ${btnClicked ? 'opacity-50' : ''} z-10`} onClick={handleLogOut} style={!user.isLoggedin ? { display: 'none' } : {}} disabled={btnClicked ? true : false}>
+              Log out
+            </button>
 
-        <div className='border-2 border-gray-700 rounded-lg mb-5 flex items-center justify-between p-3'>
-          <div className=" flex items-center">
-            <img src="https://cdn.pixabay.com/photo/2021/07/02/04/48/user-6380868_1280.png" alt="profile pic" className='w-14' />
+            <div className='border-2 border-gray-700 rounded-lg mb-5 flex items-center justify-between p-3'>
+              <div className=" flex items-center">
+                <img src="https://cdn.pixabay.com/photo/2021/07/02/04/48/user-6380868_1280.png" alt="profile pic" className='w-14' />
 
-            <div className="text flex flex-col items-center">
-              <p className='ml-3 flex items-center text-white text-[1.1rem]'>{user.name} {
-                user.isVarified ? (
-                  <IconRosetteDiscountCheckFilled className='text-blue-500 ml-1' />
-                ) : (
-                  <IconProgressAlert className='text-red-400 ml-1' />
-                )
-              }</p>
-              {
-                // <button className='bg-white text-black px-2 py-1 font-medium text-sm mt-1' onClick={handleVarification}>Get Varified</button>
+                <div className="text flex flex-col items-center">
+                  <p className='ml-3 flex items-center text-white text-[1.1rem]'>{user.name} {
+                    user.isVarified ? (
+                      <IconRosetteDiscountCheckFilled className='text-blue-500 ml-1' />
+                    ) : (
+                      <IconProgressAlert className='text-red-400 ml-1' />
+                    )
+                  }</p>
+                  {
+                    // <button className='bg-white text-black px-2 py-1 font-medium text-sm mt-1' onClick={handleVarification}>Get Varified</button>
 
-                !user.isVarified && <DrawerComp changeUpdate={changeUpdate} />
-              }
+                    !user.isVarified && <DrawerComp changeUpdate={changeUpdate} />
+                  }
+                </div>
+
+                {/* </p> */}
+              </div>
+              <AddLink buttonText="Edit Profile" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={true} />
             </div>
-
-            {/* </p> */}
+            <div className="userLinks flex flex-col items-center w-full">
+              <div className='flex w-full justify-center'>
+                <AddLink buttonText="Add New" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={false} />
+                <ShareBtn header='Profile' description='Share all your social links in one place with dynamic animations and a clean interface.' link={`${window.location.origin}/share?id=${user.id}`} />
+              </div>
+              <UrlContainer changeUpdate={changeUpdate} loading={loading} userLinks={userLinks} />
+            </div>
           </div>
-          <AddLink buttonText="Edit Profile" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={true} />
-        </div>
-        <div className="userLinks flex flex-col items-center w-full">
-          <div className='flex w-full justify-center'>
-            <AddLink buttonText="Add New" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={false} />
-            <ShareBtn header='Profile' description='Share all your social links in one place with dynamic animations and a clean interface.' link={`${window.location.origin}/share?id=${user.id}`} />
-          </div>
-          <UrlContainer changeUpdate={changeUpdate} loading={loading} userLinks={userLinks} />
-        </div>
-      </div>
-    )
+        )
+      }
+    </div>
   )
 }
 

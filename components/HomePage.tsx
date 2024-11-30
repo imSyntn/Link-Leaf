@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 const HomePage = () => {
     const router = useRouter()
     return (
-        <div className="">
+        <div className="h-[100vh] w-full flex flex-col justify-center items-center">
             {/* <HeroHighlight containerClassName="h-[100vh]"> */}
             <motion.h1
                 initial={{

@@ -71,7 +71,7 @@ export const FloatingNav = ({
           )} ${(pathname === navItem.link) ? "border border-neutral-200 dark:border-white/[0.2]  px-4 py-2 rounded-full" : ""}`}
         >
           {/* <span className="block sm:hidden">{navItem.icon}</span> */}
-          <span className="hidden sm:block text-sm">{navItem.name}</span>
+          <span className="sm:block text-sm">{navItem.name}</span>
           {
             (pathname === navItem.link) && <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px left-3 bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
           }

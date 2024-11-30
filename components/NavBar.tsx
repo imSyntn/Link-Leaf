@@ -31,12 +31,12 @@ export function Navbar() {
   ];
 
   return (
-    <div className="relative  w-full">
-      {
+    // <div className="relative  w-full">
+      // {
         (pathname !== '/share') && (
           <FloatingNav navItems={navItems} pathname={pathname} className="min-h-[55.2px]" />
         )
-      }
-    </div>
+      // }
+    // </div>
   );
 }
