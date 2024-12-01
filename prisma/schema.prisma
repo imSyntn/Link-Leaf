@@ -21,6 +21,7 @@ model User {
   password    String
   isVarified  Boolean @default(false)
   links       Link[]
+  profilePic    String @default("https://i.giphy.com/ddfb7PvwyzrepUhsdZ.webp")
   description String @default("")
   otp         String?
 }

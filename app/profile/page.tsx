@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 // import { Drawer } from 'vaul'
 import DrawerComp from '@/components/Drawer'
 import { ShareBtn } from '@/components/ShareButton'
+import { UploadImage } from '@/components/ImageUpload'
 
 // import { ToastAction } from '@/components/ui/toast'
 
@@ -32,7 +33,8 @@ const Profile = () => {
         name: '',
         isLoggedin: false,
         isVarified: false,
-        id: null
+        id: null,
+        profilePic: ''
       })
       toast({
         title: "Logged out.",
@@ -45,7 +47,6 @@ const Profile = () => {
       })
     }).finally(() => setBtnClicked(false))
   }
-
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -78,19 +79,19 @@ const Profile = () => {
 
   return (
 
-    <div className="min-h-[100vh] flex justify-center items-center">
+    <div className="min-h-[100vh]">
       {
         !user.isLoggedin ? (
-          <p className='text-2xl  tracking-widest text-center pt-10'>You are being redirected ...</p>
+          <p className='text-2xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] tracking-widest text-center pt-10'>You are being redirected ...</p>
         ) : (
-          <div className='Profile h-auto pt-24 px-6 w-[100vw]'>
+          <div className='Profile h-auto pt-24 px-6 w-full'>
             <button className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent ${btnClicked ? 'opacity-50' : ''} z-10`} onClick={handleLogOut} style={!user.isLoggedin ? { display: 'none' } : {}} disabled={btnClicked ? true : false}>
               Log out
             </button>
 
             <div className='border-2 border-gray-700 rounded-lg mb-5 flex items-center justify-between p-3'>
               <div className=" flex items-center">
-                <img src="https://cdn.pixabay.com/photo/2021/07/02/04/48/user-6380868_1280.png" alt="profile pic" className='w-14' />
+                <img src={user.profilePic} alt="profile pic" className='w-16 h-16 rounded-full' />
 
                 <div className="text flex flex-col items-center">
                   <p className='ml-3 flex items-center text-white text-[1.1rem]'>{user.name} {
@@ -109,7 +110,10 @@ const Profile = () => {
 
                 {/* </p> */}
               </div>
-              <AddLink buttonText="Edit Profile" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={true} />
+              <div className="">
+                <AddLink buttonText="Edit Profile" delBtn={false} urlObj={null} changeUpdate={changeUpdate} editProfile={true} />
+                <UploadImage user={user} setUser={setUser} />
+              </div>
             </div>
             <div className="userLinks flex flex-col items-center w-full">
               <div className='flex w-full justify-center'>

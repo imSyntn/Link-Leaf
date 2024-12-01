@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import axios from 'axios'
 import '@/app/share/sharePage.css'
-// import { useToast } from '@/hooks/use-toast'
+import { useToast } from '@/hooks/use-toast'
 import { dropdownValue } from '@/lib/DropdownValue'
 import { FaXTwitter as Twitter, FaInstagram as Instagram, FaShare } from "react-icons/fa6";
 import { FiYoutube as Youtube } from "react-icons/fi";
@@ -34,104 +34,36 @@ const Share = () => {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
 
-  // const { toast } = useToast()
+  const { toast } = useToast()
   const [siteRendered, setSiteRendered] = useState(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const [data, setData] = useState<any>({
-    "email": "ssayantan84@gmail.com",
-    "isVarified": false,
-    "name": "Sayantan Sarkar",
-    "links": [
-      {
-        "id": 7,
-        "siteName": "Dribble",
-        "siteURL": "https://dribbble.com/",
-        "description": "Designs",
-        "userId": 21
-      },
-      {
-        "id": 10,
-        "siteName": "Twitter",
-        "siteURL": "https://x.com/",
-        "description": "sdfd",
-        "userId": 21
-      },
-      {
-        "id": 11,
-        "siteName": "Neon",
-        "siteURL": "https://neon.tech",
-        "description": "Posrgress server",
-        "userId": 21
-      },
-      {
-        "id": 17,
-        "siteName": "Spotify",
-        "siteURL": "https://open.spotify.com/",
-        "description": "Spotify",
-        "userId": 21
-      },
-      {
-        "id": 12,
-        "siteName": "Youtube",
-        "siteURL": "ada",
-        "description": "asdasd",
-        "userId": 21
-      },
-      {
-        "id": 13,
-        "siteName": "Instagram",
-        "siteURL": "adsad",
-        "description": "asdas",
-        "userId": 21
-      },
-      {
-        "id": 14,
-        "siteName": "Tiktok",
-        "siteURL": "asdasd",
-        "description": "asdasd",
-        "userId": 21
-      },
-      {
-        "id": 15,
-        "siteName": "Linkedin",
-        "siteURL": "asas",
-        "description": "asasdas",
-        "userId": 21
-      },
-      {
-        "id": 16,
-        "siteName": "Linktree",
-        "siteURL": "https://linktr.ee/",
-        "description": "asasdas",
-        "userId": 21
-      }
-    ]
-  })
+  const [data, setData] = useState<any>()
+
   useEffect(() => {
     setSiteRendered(true)
   }, [])
 
-  // useEffect(() => {
-  //   if (id) {
-  //     setLoading(true)
-  //     axios.get(`/api/share?id=${id}`)
-  //       .then(e => {
-  //         if (e.data.status == 400) {
-  //           toast({
-  //             title: 'Error.',
-  //             description: e.data.msg
-  //           })
-  //         } else {
-  //           setData(e.data.userData[0])
-  //         }
-  //       })
-  //       .catch(e => toast({
-  //         title: 'Error',
-  //         description: 'Error Occured'
-  //       }))
-  //       .finally(() => setLoading(false))
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (id) {
+      setLoading(true)
+      axios.get(`/api/share?id=${id}`)
+        .then(e => {
+          if (e.data.status == 400) {
+            toast({
+              title: 'Error.',
+              description: e.data.msg
+            })
+          } else {
+            setData(e.data.userData[0])
+          }
+        })
+        .catch(e => toast({
+          title: 'Error',
+          description: 'Error Occured'
+        }))
+        .finally(() => setLoading(false))
+    }
+  }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -202,7 +134,7 @@ const Share = () => {
               <div className='relative flex justify-center items-end'>
                 <Svg TailwindClass='h-[100%] absolute left-[50%] bottom-0 translate-x-[-50%]' />
                 {/* <img src="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/svg.png" className='h-[100%] w-[100vw]  absolute left-[50%] bottom-0 translate-x-[-50%]' alt="" /> */}
-                <motion.img src="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/square%20astronaut-min.png" alt="Profile pic" className='mt-12 w-44 h-44 rounded-full z-10 sm:w-48 sm:h-48' initial={{
+                <motion.img src={data?.profilePic} alt="Profile pic" className='mt-12 w-44 h-44 rounded-full z-10 sm:w-48 sm:h-48' initial={{
                   opacity: 0,
                   y: '35px'
                 }} animate={{

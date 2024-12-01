@@ -52,7 +52,8 @@ export default function SignupForm() {
               name: e.data.name,
               isLoggedin: true,
               isVarified: e.data.isVarified,
-              id: e.data.id
+              id: e.data.id,
+              profilePic: e.data.profilePic
             })
             router.push('/profile')
           }

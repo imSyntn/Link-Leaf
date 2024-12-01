@@ -48,7 +48,8 @@ export default function LogInForm() {
               name: data.name,
               isLoggedin: true,
               isVarified: data.isVarified,
-              id: data.id
+              id: data.id,
+              profilePic: data.profilePic
             })
             router.push('/profile')
           }

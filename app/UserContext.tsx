@@ -6,7 +6,8 @@ export interface userType {
     name: string,
     isLoggedin: boolean,
     isVarified: boolean,
-    id: number | null
+    id: number | null,
+    profilePic: string
 }
 
 interface userContextPropType {
@@ -22,7 +23,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         name: '',
         isLoggedin: false,
         isVarified: false,
-        id: null
+        id: null,
+        profilePic: ''
     })
 
     return (

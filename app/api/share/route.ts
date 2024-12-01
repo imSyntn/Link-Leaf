@@ -23,7 +23,8 @@ export async function GET(request: NextRequest) {
                 email: true,
                 isVarified: true,
                 name: true,
-                links: true
+                links: true,
+                profilePic: true
             }
         })
         if (userData) {
