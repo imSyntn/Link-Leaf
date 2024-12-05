@@ -6,7 +6,6 @@ import { Navbar } from "@/components/NavBar";
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { Toaster } from "@/components/ui/toaster";
 import Link from "next/link";
-import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

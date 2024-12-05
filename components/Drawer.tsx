@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import {
     Drawer,
@@ -23,7 +23,7 @@ import axios from "axios"
 import { useUserContext } from "@/app/UserContext"
 
 
-export default function DrawerComp({changeUpdate}: {changeUpdate: ()=> void}) {
+export default function DrawerComp() {
 
     const [loading, setLoading] = useState(false)
     const cancelBtn = useRef<HTMLButtonElement>(null)
@@ -34,7 +34,6 @@ export default function DrawerComp({changeUpdate}: {changeUpdate: ()=> void}) {
     const { toast } = useToast()
 
     const sendOTP = () => {
-        console.log(22222222)
         setLoading(true)
         axios.get('/api/profile/varification', { withCredentials: true }).then((e) => {
             if (e.data.status === 400) {
@@ -47,7 +46,7 @@ export default function DrawerComp({changeUpdate}: {changeUpdate: ()=> void}) {
                 setLoading(false)
             }
         })
-            .catch(e => {
+            .catch(() => {
                 toast({
                     title: 'Error',
                     description: 'Error occured'
@@ -56,7 +55,6 @@ export default function DrawerComp({changeUpdate}: {changeUpdate: ()=> void}) {
     }
 
     const varifyOTP = () => {
-        console.log(111111111)
         toast({
             title: 'Varifying.',
             description: 'Varification in progress.'
@@ -80,7 +78,7 @@ export default function DrawerComp({changeUpdate}: {changeUpdate: ()=> void}) {
                     })
                 }
             }
-        }).catch((e)=> {
+        }).catch(()=> {
             toast({
                 title: 'Error',
                 description: 'Error Occured.'

@@ -7,8 +7,6 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
     const id = searchParams.get('id')
 
-    console.log(searchParams)
-
     if (!id) return NextResponse.json({
         status: 400,
         msg: 'ID not available.'
@@ -24,7 +22,8 @@ export async function GET(request: NextRequest) {
                 isVarified: true,
                 name: true,
                 links: true,
-                profilePic: true
+                profilePic: true,
+                description: true
             }
         })
         if (userData) {
@@ -32,11 +31,6 @@ export async function GET(request: NextRequest) {
                 status: 200,
                 userData,
                 msg: 'Ok.'
-            })
-        } else {
-            return NextResponse.json({
-                status: 400,
-                msg: 'User not valid.'
             })
         }
 

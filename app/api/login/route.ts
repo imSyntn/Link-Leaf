@@ -13,43 +13,38 @@ export async function POST(request: NextRequest) {
                 email: email
             }
         })
-        if (isAvailable) {
-            const isValid = await bcrypt.compare(password, isAvailable.password)
+        if (!isAvailable) return NextResponse.json({
+            status: 400,
+            msg: 'User not Available'
+        })
 
-            if (isValid) {
-                const token = jwt.sign({
-                    name: isAvailable.name,
-                    id: isAvailable.id,
-                    userName: isAvailable.userName,
-                    email: isAvailable.email
-                }, process.env.JWT_SECRET!)
-                
-                const response = NextResponse.json({
-                    name: isAvailable.name,
-                    id: isAvailable.id,
-                    userName: isAvailable.userName,
-                    email: isAvailable.email,
-                    isVarified: isAvailable.isVarified,
-                    profilePic: isAvailable.profilePic
-                })
-                response.cookies.set('token', token, { secure: true, httpOnly: true })
-                return response
-            } else {
-                return NextResponse.json({
-                    status: 400,
-                    msg: 'Incorrect email or password.'
-                })
-            }
-        } else {
-            return NextResponse.json({
-                status: 400,
-                msg: 'User not Available'
-            })
-        }
+        const isValid = await bcrypt.compare(password, isAvailable.password)
+
+        if (!isValid) return NextResponse.json({
+            status: 400,
+            msg: 'Incorrect email or password.'
+        })
+
+        const token = jwt.sign({
+            name: isAvailable.name,
+            id: isAvailable.id,
+            userName: isAvailable.userName,
+            email: isAvailable.email
+        }, process.env.JWT_SECRET!)
+
+        const response = NextResponse.json({
+            name: isAvailable.name,
+            id: isAvailable.id,
+            userName: isAvailable.userName,
+            email: isAvailable.email,
+            isVarified: isAvailable.isVarified,
+            profilePic: isAvailable.profilePic
+        })
+        response.cookies.set('token', token, { secure: true, httpOnly: true })
+        return response;
         // await prisma.$disconnect()
 
-    } catch (error: any) {
-        console.log(0)
+    } catch (error) {
         console.log(error)
         await prisma.$disconnect()
         return NextResponse.json({
@@ -57,7 +52,6 @@ export async function POST(request: NextRequest) {
             msg: 'Error Occured.'
         })
     } finally {
-        console.log(1111)
         await prisma.$disconnect()
     }
 }

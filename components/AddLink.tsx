@@ -40,15 +40,15 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
     }
   }, [urlObj])
 
-  useEffect(()=> {
-    if(!editProfile) {
-      if(inputData.siteName === 'Custom') {
+  useEffect(() => {
+    if (!editProfile) {
+      if (inputData.siteName === 'Custom') {
         setCustom(true)
       }
     }
-  },[inputData])
+  }, [inputData, editProfile])
 
-  const setValue = (name:string) => {
+  const setValue = (name: string) => {
     setInputData(prev => ({ ...prev, siteName: name }))
   }
 
@@ -226,7 +226,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
               (editProfile && !custom && !urlObj) ? <Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" /> : (!editProfile && !custom && !urlObj) ? (
                 <Dropdown value={inputData.siteName} setValue={setValue} />
               ) : (<Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" />)
-            } 
+            }
             {/* {
               (custom) && <Input id="name" value={inputData.siteName} onChange={(e) => setInputData(prev => ({ ...prev, siteName: e.target.value }))} className="w-full" />
             } */}
@@ -244,7 +244,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
               Description
             </Label>
             {
-              editProfile ? <Textarea className='w-[184px]  bg-gray-50 dark:bg-zinc-800' onChange={(e) => setInputData(prev => ({ ...prev, description: e.target.value }))} /> :<Input id="Description" value={inputData.description} onChange={(e) => setInputData(prev => ({ ...prev, description: e.target.value }))} className="w-full" />
+              editProfile ? <Textarea className='w-[184px]  bg-gray-50 dark:bg-zinc-800' onChange={(e) => setInputData(prev => ({ ...prev, description: e.target.value }))} /> : <Input id="Description" value={inputData.description} onChange={(e) => setInputData(prev => ({ ...prev, description: e.target.value }))} className="w-full" />
             }
           </div>
         </div>

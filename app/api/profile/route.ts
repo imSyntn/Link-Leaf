@@ -6,38 +6,34 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient()
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     const cookieStore = await cookies()
     const token = cookieStore.get('token')
 
-    if (token) {
-        const { id } = jwt.verify(token.value, process.env.JWT_SECRET!) as JwtPayload
-        if (id) {
-            try {
-                const userData = await prisma.link.findMany({
-                    where: {
-                        userId: id
-                    }
-                })
-                return NextResponse.json(userData)
+    if (!token) return NextResponse.json({
+        status: 400,
+        msg: "Log in first."
+    })
+    const { id } = jwt.verify(token.value, process.env.JWT_SECRET!) as JwtPayload
 
-            } catch (e) {
-                return NextResponse.json({
-                    status: 500,
-                    msg: 'Error occured.'
-                })
+    if (!id) return NextResponse.json({
+        status: 400,
+        msg: "Token not valid."
+    })
+
+    try {
+        const userData = await prisma.link.findMany({
+            where: {
+                userId: id
             }
-        } else {
-            return NextResponse.json({
-                status: 400,
-                msg: "Token not valid."
-            })
-        }
+        })
+        return NextResponse.json(userData)
 
-    } else {
+    } catch (e) {
+        console.log(e)
         return NextResponse.json({
-            status: 400,
-            msg: "Log in first."
+            status: 500,
+            msg: 'Error occured.'
         })
     }
 }
@@ -47,44 +43,42 @@ export async function POST(request: NextRequest) {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')
 
-    if (token) {
-        const { id } = jwt.verify(token.value, process.env.JWT_SECRET!) as JwtPayload
-        if (id) {
-            try {
-                const userData = await prisma.link.create({
-                    data: {
-                        siteName,
-                        siteURL,
-                        description,
-                        author: {
-                            connect: { id }
-                        }
-                    }
-                })
-                return NextResponse.json(userData)
+    if (!token) return NextResponse.json({
+        status: 400,
+        msg: "Log in first."
+    })
 
-            } catch (e) {
-                return NextResponse.json({
-                    status: 500,
-                    msg: 'Error occured.'
-                })
+    const { id } = jwt.verify(token.value, process.env.JWT_SECRET!) as JwtPayload
+
+    if (!id) return NextResponse.json({
+        status: 400,
+        msg: "Token not valid."
+    })
+
+    try {
+        const userData = await prisma.link.create({
+            data: {
+                siteName,
+                siteURL,
+                description,
+                author: {
+                    connect: { id }
+                }
             }
-        } else {
-            return NextResponse.json({
-                status: 400,
-                msg: "Token not valid."
-            })
-        }
-    } else {
+        })
+        return NextResponse.json(userData)
+
+    } catch (e) {
+        console.log(e)
         return NextResponse.json({
-            status: 400,
-            msg: "Log in first."
+            status: 500,
+            msg: 'Error occured.'
         })
     }
 }
 
 const checkFields = (siteName: string, siteURL: string, description: string) => {
-    const obj : {
+    const obj: {
         siteName?: string,
         siteURL?: string,
         description?: string
@@ -113,26 +107,26 @@ export async function PATCH(request: NextRequest) {
             status: 200,
             msg: 'Id not valid.'
         })
-    } else {
-        try {
-            const updatedLink = await prisma.link.update({
-                where: {
-                    id: parseInt(id)
-                },
-                data: updates
-            })
-            return NextResponse.json({
-                status: 200,
-                msg: 'Updated Successfully.'
-            })
+    }
 
-        } catch (error: any) {
-            console.log(error.message)
-            return NextResponse.json({
-                status: 500,
-                msg: 'Error occured.'
-            })
-        }
+    try {
+        await prisma.link.update({
+            where: {
+                id: parseInt(id)
+            },
+            data: updates
+        })
+        return NextResponse.json({
+            status: 200,
+            msg: 'Updated Successfully.'
+        })
+
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json({
+            status: 500,
+            msg: 'Error occured.'
+        })
     }
 }
 
@@ -145,25 +139,25 @@ export async function DELETE(request: NextRequest) {
             status: 200,
             msg: 'Id not valid.'
         })
-    } else {
-        try {
-            const deletedLink = await prisma.link.delete({
-                where: {
-                    id: parseInt(id)
-                }
-            })
-            console.log(deletedLink)
-            return NextResponse.json({
-                status: 200,
-                msg: 'Deleted Successfully.'
-            })
+    }
 
-        } catch (error: any) {
-            console.log(error.message)
-            return NextResponse.json({
-                status: 500,
-                msg: 'Error occuted'
-            })
-        }
+    try {
+        const deletedLink = await prisma.link.delete({
+            where: {
+                id: parseInt(id)
+            }
+        })
+        console.log(deletedLink)
+        return NextResponse.json({
+            status: 200,
+            msg: 'Deleted Successfully.'
+        })
+
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json({
+            status: 500,
+            msg: 'Error occuted'
+        })
     }
 }

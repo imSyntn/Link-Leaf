@@ -17,11 +17,11 @@ export function ShareBtn({ header, description, link }: { header: string, descri
 
   const copyHandler = () => {
     navigator.clipboard.writeText(link)
-      .then((e) => toast({
+      .then(() => toast({
         title: 'Copied',
         description: 'Link copied successfully.'
       }))
-      .catch((e) => toast({
+      .catch(() => toast({
         title: 'Error',
         description: 'Unexpected error occured.'
       }))

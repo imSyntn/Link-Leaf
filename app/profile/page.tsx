@@ -26,7 +26,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false)
   const [userLinks, setUserLinks] = useState<urlType[]>([])
 
-  const handleLogOut = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogOut = () => {
     setBtnClicked(true)
     axios.get('/api/logout', { withCredentials: true }).then(e => {
       setUser({
@@ -41,6 +41,7 @@ const Profile = () => {
         description: e.data.msg
       })
     }).catch(e => {
+      console.log(e)
       toast({
         title: "Error",
         description: 'Error occured.'
@@ -79,7 +80,7 @@ const Profile = () => {
 
   return (
 
-    <div className="min-h-[100vh]">
+    <div className="min-h-[100vh] relative">
       {
         !user.isLoggedin ? (
           <p className='text-2xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] tracking-widest text-center pt-10'>You are being redirected ...</p>
@@ -102,9 +103,7 @@ const Profile = () => {
                     )
                   }</p>
                   {
-                    // <button className='bg-white text-black px-2 py-1 font-medium text-sm mt-1' onClick={handleVarification}>Get Varified</button>
-
-                    !user.isVarified && <DrawerComp changeUpdate={changeUpdate} />
+                    !user.isVarified && <DrawerComp />
                   }
                 </div>
 
