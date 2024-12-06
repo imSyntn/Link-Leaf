@@ -41,5 +41,4 @@ export async function GET(request: NextRequest) {
             msg: 'Error.'
         })
     }
-
 }

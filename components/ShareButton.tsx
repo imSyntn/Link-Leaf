@@ -30,7 +30,7 @@ export function ShareBtn({ header, description, link }: { header: string, descri
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="ml-2 border-white bg-white text-black">Share</Button>
+        <Button variant="outline" className="border-white bg-white text-black">Share</Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="w-[360px]">
         <AlertDialogHeader>
