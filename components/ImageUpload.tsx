@@ -60,7 +60,7 @@ export function UploadImage({ user, setUser }: { user: userType, setUser: React.
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline" className="border-white bg-white text-black ml-1">Upload Image</Button>
+                <Button variant="outline" className="border-white bg-white text-black">Upload Image</Button>
             </DialogTrigger>
             <DialogContent className="w-[360px] sm:max-w-[425px]" style={btnClicked ? { opacity: 0.5 } : {}}>
                 <DialogHeader>

@@ -18,16 +18,22 @@ import {
 import { chartDataType } from "./page";
 
 const chartConfig = {
-    count: {
-      label: "Count",
-      color: "hsl(var(--chart-1))",
-    },
-  } satisfies ChartConfig;
+  count: {
+    label: "Count",
+    color: "hsl(var(--chart-1))",
+  },
+} satisfies ChartConfig;
 
-const LineChartComp = ({monthNames, chartData}: {monthNames: string[], chartData: chartDataType[]}) => {
+const LineChartComp = ({
+  monthNames,
+  chartData,
+}: {
+  monthNames: string[];
+  chartData: chartDataType[];
+}) => {
   return (
     <Card>
-      <CardHeader className="p-2 sm:p-6">
+      <CardHeader className="p-6">
         <CardTitle>View count</CardTitle>
         <CardDescription>
           {monthNames[chartData[0].month - 1]} to{" "}
@@ -37,7 +43,7 @@ const LineChartComp = ({monthNames, chartData}: {monthNames: string[], chartData
       <CardContent className="p-2 sm:p-6">
         <ChartContainer
           config={chartConfig}
-          className="min-h-[200px] min-w-[335px] w-[80vw] sm:w-[70vw] max-w-[750px] "
+          className="min-h-[200px] min-w-[288px] w-[80vw] sm:w-[70vw] max-w-[750px] "
         >
           <LineChart
             accessibilityLayer
@@ -62,13 +68,22 @@ const LineChartComp = ({monthNames, chartData}: {monthNames: string[], chartData
             <Line
               dataKey="count"
               type="linear"
-              stroke={chartConfig.count.color}
+              // stroke="#8c33ff"
+              stroke="hsl(var(--chart-2))"
               strokeWidth={2}
-              dot={false}
+              dot={true}
             />
           </LineChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm mt-3">
+        <div className="flex gap-2 font-medium leading-none">
+        Data updated recently <TrendingUp className="h-4 w-4" />
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Showing monthly visitor trends.
+        </div>
+      </CardFooter>
     </Card>
   );
 };

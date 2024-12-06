@@ -18,7 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-import { chartDataType } from "./page";
+// import { chartDataType } from "./page";
 
 const chartConfig = {
   visitors: {
@@ -35,11 +35,15 @@ export default function RadialChartComp({
   description,
   visitors,
   text,
+  footerHead,
+  footerTail
 }: {
   thisMonth: boolean;
   description: string;
   visitors: number;
   text: string;
+  footerHead: string,
+  footerTail: string
 }) {
   // const totalVisitors = chartData.reduce((sum, item)=> sum+=item.count, 0)
 
@@ -58,7 +62,7 @@ export default function RadialChartComp({
             data={[
               {
                 visitors: visitors,
-                fill: "var(--color-safari)",
+                fill: "hsl(var(--chart-2))",
               },
             ]}
             endAngle={100}
@@ -109,10 +113,10 @@ export default function RadialChartComp({
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          {footerHead} <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          {footerTail}
         </div>
       </CardFooter>
     </Card>

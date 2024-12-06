@@ -100,27 +100,33 @@ export default function Page() {
   const MonthlyVisitorsObj: chartDataType = chartData[chartData.length - 1];
 
   return (
-    <div className="min-h-[100vh] flex flex-col justify-center items-center  pt-[80px]">
-      <div className=" flex justify-between items-center gap-5 flex-wrap mb-4">
+    <div className="min-h-[100vh] flex gap-5 justify-center items-center flex-wrap">
+      {/* <div className=" flex justify-between items-center gap-5 flex-wrap mb-4"> */}
         <RadialChartComp
           thisMonth={false}
           description={description}
           visitors={Math.floor(TotalVisitors)}
           text="Total Visitors"
+          footerHead={'Total views updated recently'}
+          footerTail={'Cumulative views.'}
         />
         <RadialChartComp
           thisMonth={false}
           description={monthNames[MonthlyVisitorsObj.month - 1]}
           visitors={Math.floor(MonthlyVisitorsObj.count)}
           text="Monthly Visitors"
+          footerHead={'Monthly views updated recently'}
+          footerTail={'Cumulative views.'}
         />
         <RadialChartComp
           thisMonth={false}
           description={`${monthNames[chartData[0].month - 1]} to ${monthNames[MonthlyVisitorsObj.month - 1]}`}
           visitors={Math.floor(AverageVisitors)}
-          text="Avarage Visitors"
+          text="Average Visitors"
+          footerHead={'Average views updated recently'}
+          footerTail={'Average views.'}
         />
-      </div>
+      {/* </div> */}
       <LineChartComp monthNames={monthNames} chartData={chartData} />
     </div>
   );

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SetStateAction } from 'react'
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -19,8 +19,9 @@ import { toast } from '@/hooks/use-toast'
 import axios from 'axios'
 import { Textarea } from './ui/textarea'
 import { Dropdown } from './Dropdown'
+import { contextUpdateType } from '@/app/profile/layout'
 
-export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, editProfile }: { buttonText: string, delBtn: boolean, urlObj: urlType | null, changeUpdate: () => void, editProfile: boolean }) {
+export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, editProfile }: { buttonText: string, delBtn: boolean, urlObj: urlType | null, changeUpdate: (obj?:contextUpdateType) => void, editProfile: boolean }) {
 
   const [inputData, setInputData] = useState({
     siteName: '',
@@ -60,7 +61,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
     }, { withCredentials: true })
       .then(e => {
         console.log(e)
-        if (e.data.status == 400 || e.data.status) {
+        if (e.data.status >= 400) {
           toast({
             title: "Error",
             description: "Error occured."
@@ -70,12 +71,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
             title: "Updated.",
             description: "Updated successfully."
           })
-          changeUpdate()
-          setInputData({
-            siteName: '',
-            siteURL: '',
-            description: ''
-          })
+          changeUpdate(e.data)
         }
       })
       .catch(e => {
