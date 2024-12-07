@@ -86,7 +86,7 @@ export default function LogInForm() {
 
   return (
     <div className="h-[100vh] flex justify-center items-center">
-      <div className="w-auto mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black" style={btnClicked ? { opacity: 0.5 } : {}}>
+      <div className="min-w-[350px] w-auto mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black" style={btnClicked ? { opacity: 0.5 } : {}}>
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
           Login to your account
         </h2>

@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { useUserContext } from "../UserContext";
-import { useToast } from "@/hooks/use-toast";
 import { AddLink } from "@/components/AddLink";
 import UrlContainer, { urlType } from "@/components/UrlContainer";
 import axios from "axios";
@@ -11,7 +10,7 @@ import axios from "axios";
 // } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 // import { Drawer } from 'vaul'
-import DrawerComp from "@/components/Drawer";
+// import DrawerComp from "@/components/Drawer";
 import { ShareBtn } from "@/components/ShareButton";
 // import { UploadImage } from "@/components/ImageUpload";
 import { Button } from "@/components/ui/button";
@@ -21,43 +20,15 @@ import { useUpdate } from "@/hooks/useUpdate";
 // import { ToastAction } from '@/components/ui/toast'
 
 const Profile = () => {
-  const { toast } = useToast();
   const router = useRouter();
 
-  const { user, setUser } = useUserContext();
+  const { user } = useUserContext();
   const { update, changeUpdate } = useUpdate();
 
-  const [btnClicked, setBtnClicked] = useState(false);
   // const [update, setUpdate] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [userLinks, setUserLinks] = useState<urlType[]>([]);
 
-  const handleLogOut = () => {
-    setBtnClicked(true);
-    axios
-      .get("/api/logout", { withCredentials: true })
-      .then((e) => {
-        setUser({
-          name: "",
-          isLoggedin: false,
-          isVarified: false,
-          id: null,
-          profilePic: "",
-        });
-        toast({
-          title: "Logged out.",
-          description: e.data.msg,
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-        toast({
-          title: "Error",
-          description: "Error occured.",
-        });
-      })
-      .finally(() => setBtnClicked(false));
-  };
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -97,16 +68,6 @@ const Profile = () => {
         </p>
       ) : (
         <div className="Profile h-auto px-6 w-full">
-          <button
-            className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent ${
-              btnClicked ? "opacity-50" : ""
-            } z-10`}
-            onClick={handleLogOut}
-            style={!user.isLoggedin ? { display: "none" } : {}}
-            disabled={btnClicked ? true : false}
-          >
-            Log out
-          </button>
 
           {/* <div className="border-2 border-gray-700 rounded-lg mb-5 flex items-center justify-between p-3">
             <div className=" flex items-center">
