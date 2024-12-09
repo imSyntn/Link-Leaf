@@ -60,3 +60,29 @@ export async function POST(request: NextRequest) {
     });
   }
 }
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const id = searchParams.get('id')
+
+  if(!id) {
+    return
+  }
+
+  try {
+    const visitorsData = await prisma.visitors.findMany({
+      where: {
+        userId: parseInt(id)
+      },
+      select: {
+        month: true,
+        count: true
+      }
+    })
+    return NextResponse.json({
+      data: visitorsData
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}

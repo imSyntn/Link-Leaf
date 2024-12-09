@@ -3,11 +3,12 @@ import { SiGithub } from "react-icons/si";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
+import { Highlight } from './ui/hero-highlight';
 
 const Footer = () => {
     return (
         <footer className="w-full p-5 sm:px-12 pb-5 mt-12 flex flex-wrap items-center justify-between md:px-5">
-            <h1 className="text-3xl font-normal font-caveat">Link Leaf</h1>
+            <Highlight className='text-3xl font-bold'>Link Leaf</Highlight>
             <div className="flex flex-col items-end">
                 <div className="flex space-x-4">
                     <a href="https://github.com/imSyntn/Link-Leaf" target="_blank" rel="noopener noreferrer">

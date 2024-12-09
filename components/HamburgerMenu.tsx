@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useUserContext } from "@/app/UserContext";
 import LogoutBtn from "./LogoutBtn";
 import { motion, AnimatePresence } from "framer-motion";
+import { IconX, IconMenu2 } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 
 const containerVatients = {
   hidden: {
@@ -24,19 +26,20 @@ const containerVatients = {
 const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { user, setUser } = useUserContext();
+  const pathname = usePathname();
 
   return (
     <div className="block fixed top-4 right-5 z-50 sm:hidden">
       <button
-        className=" relative border border-emerald-200 p-2 cursor-pointer z-[51]"
+        className=" relative p-2 cursor-pointer z-[51]"
         onClick={() => setOpen((prev) => !prev)}
       >
-        =
+        {open ? <IconX className="" /> : <IconMenu2 className="" />}
       </button>
       <AnimatePresence>
         {open && (
           <motion.div
-            className="absolute top-[-50px] right-[-100px] rounded-full w-96 h-96 bg-[#00000000] backdrop-blur-md flex flex-col items-center justify-center gap-5"
+            className="absolute top-[-50px] right-[-100px] rounded-full w-96 h-96 bg-[#00000000] backdrop-blur-lg flex flex-col items-center justify-center gap-5"
             variants={containerVatients}
             initial="hidden"
             animate="visible"
@@ -46,7 +49,10 @@ const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
               <Link
                 key={item.name}
                 href={item.link}
-                className="block border border-blue-200 w-fit  z-[51]"
+                className={`block relative w-fit text-md font-bold tracking-wider z-[51] blend-difference ${
+                  item.link == pathname ?
+                  "border border-neutral-200 dark:border-white  px-4 py-2 rounded-full" : ''
+                }`}
               >
                 {item.name}
               </Link>
@@ -55,7 +61,7 @@ const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
               <LogoutBtn
                 user={user}
                 setUser={setUser}
-                classNames="relative top-[0px] right-0"
+                classNames="relative top-[0px] right-[0px]"
               />
             )}
           </motion.div>

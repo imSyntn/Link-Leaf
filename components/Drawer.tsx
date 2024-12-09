@@ -36,7 +36,7 @@ export default function DrawerComp() {
     const sendOTP = () => {
         setLoading(true)
         axios.get('/api/profile/varification', { withCredentials: true }).then((e) => {
-            if (e.data.status === 400) {
+            if (e.data.status >= 400) {
                 toast({
                     title: 'Error.',
                     description: e.data.msg
