@@ -1,42 +1,47 @@
-import React from 'react'
+import React from "react";
 
 const Svg = ({ TailwindClass }: { TailwindClass: string }) => {
-    return (
-        <svg
-            width="100%"
-            height="100%"
-            id="svg"
-            viewBox="0 0 1440 390"
-            xmlns="http://www.w3.org/2000/svg"
-            className={`transition duration-300 ease-in-out delay-150 ${TailwindClass}`}
-            preserveAspectRatio="none"
-        >
-            <defs>
-                <linearGradient id="gradient" x1="91%" y1="78%" x2="9%" y2="22%">
-                    <stop offset="5%" stopColor="#000000" />
-                    <stop offset="95%" stopColor="#9900ef" />
-                </linearGradient>
-            </defs>
-            <path
-                d="M 0,400 L 0,0 C 123.49282296650719,60.96650717703349 246.98564593301438,121.93301435406698 337,146 C 427.0143540669856,170.06698564593302 483.5502392344497,157.23444976076553 556,139 C 628.4497607655503,120.76555023923446 716.8133971291867,97.12918660287082 825,95 C 933.1866028708133,92.87081339712918 1061.1961722488036,112.2488038277512 1167,100 C 1272.8038277511964,87.7511961722488 1356.4019138755982,43.8755980861244 1440,0 L 1440,400 L 0,400 Z"
-                stroke="none"
-                strokeWidth="0"
-                fill="url(#gradient)"
-                fillOpacity="0.53"
-                className="transition-all duration-300 ease-in-out delay-150 path-0"
-                transform="rotate(-180 720 200)"
-            />
-            <path
-                d="M 0,400 L 0,0 C 116.5358851674641,110.80382775119617 233.0717703349282,221.60765550239233 318,261 C 402.9282296650718,300.39234449760767 456.2488038277513,268.37320574162686 537,238 C 617.7511961722487,207.62679425837317 725.933014354067,178.89952153110045 821,184 C 916.066985645933,189.10047846889955 998.0191387559807,228.02870813397132 1099,203 C 1199.9808612440193,177.97129186602868 1319.9904306220096,88.98564593301434 1440,0 L 1440,400 L 0,400 Z"
-                stroke="none"
-                strokeWidth="0"
-                fill="url(#gradient)"
-                fillOpacity="1"
-                className="transition-all duration-300 ease-in-out delay-150 path-1"
-                transform="rotate(-180 720 200)"
-            />
-        </svg>
-    )
-}
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      id="svg"
+      viewBox="0 0 1440 390"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`${TailwindClass}`} preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient id="gradient" x1="88%" y1="83%" x2="12%" y2="17%">
+          <stop offset="5%" stop-color="#000000"></stop>
+          <stop offset="95%" stop-color="#9900ef"></stop>
+        </linearGradient>
+      </defs>
+      <path
+        d="M 0,400 L 0,0 C 116.22966507177034,66.20095693779903 232.45933014354068,132.40191387559807 323,140 C 413.5406698564593,147.59808612440193 478.3923444976076,96.59330143540669 562,84 C 645.6076555023924,71.40669856459331 747.9712918660288,97.22488038277513 852,100 C 956.0287081339712,102.77511961722487 1061.7224880382776,82.50717703349282 1160,62 C 1258.2775119617224,41.49282296650718 1349.1387559808613,20.74641148325359 1440,0 L 1440,400 L 0,400 Z"
+        stroke="none"
+        stroke-width="0"
+        fill="url(#gradient)"
+        fill-opacity="0.53"
+        className="transition-all duration-300 ease-in-out delay-150 path-0"
+        transform="rotate(-180 720 200)"
+      ></path>
+      <defs>
+        <linearGradient id="gradient" x1="88%" y1="83%" x2="12%" y2="17%">
+          <stop offset="5%" stop-color="#000000"></stop>
+          <stop offset="95%" stop-color="#9900ef"></stop>
+        </linearGradient>
+      </defs>
+      <path
+        d="M 0,400 L 0,0 C 84.54545454545456,79.99043062200955 169.09090909090912,159.9808612440191 260,200 C 350.9090909090909,240.0191387559809 448.18181818181813,240.06698564593302 551,232 C 653.8181818181819,223.93301435406698 762.1818181818182,207.75119617224883 873,214 C 983.8181818181818,220.24880382775117 1097.0909090909092,248.92822966507177 1192,217 C 1286.9090909090908,185.07177033492823 1363.4545454545455,92.53588516746412 1440,0 L 1440,400 L 0,400 Z"
+        stroke="none"
+        stroke-width="0"
+        fill="url(#gradient)"
+        fill-opacity="1"
+        className="transition-all duration-300 ease-in-out delay-150 path-1"
+        transform="rotate(-180 720 200)"
+      ></path>
+    </svg>
+  );
+};
 
-export default Svg
+export default Svg;

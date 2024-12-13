@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useUserContext } from "../UserContext";
 import { AddLink } from "@/components/AddLink";
 import UrlContainer, { urlType } from "@/components/UrlContainer";
@@ -68,40 +68,6 @@ const Profile = () => {
         </p>
       ) : (
         <div className="Profile h-auto px-6 w-full">
-
-          {/* <div className="border-2 border-gray-700 rounded-lg mb-5 flex items-center justify-between p-3">
-            <div className=" flex items-center">
-              <img
-                src={user.profilePic}
-                alt="profile pic"
-                className="w-16 h-16 rounded-full"
-              />
-
-              <div className="text flex flex-col items-center">
-                <p className="ml-3 flex items-center text-white text-[1.1rem]">
-                  {user.name}{" "}
-                  {user.isVarified ? (
-                    <IconRosetteDiscountCheckFilled className="text-blue-500 ml-1" />
-                  ) : (
-                    <IconProgressAlert className="text-red-400 ml-1" />
-                  )}
-                </p>
-                {!user.isVarified && <DrawerComp />}
-              </div>
-
-              {/* </p> */}
-          {/* </div>
-            <div className="">
-              <AddLink
-                buttonText="Edit Profile"
-                delBtn={false}
-                urlObj={null}
-                changeUpdate={changeUpdate}
-                editProfile={true}
-              />
-              <UploadImage user={user} setUser={setUser} />
-            </div>
-          </div> */}
           <div className="userLinks flex flex-col items-center w-full">
             <div className="flex w-full justify-center gap-2">
               <AddLink

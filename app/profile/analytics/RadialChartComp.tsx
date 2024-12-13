@@ -31,14 +31,12 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function RadialChartComp({
-  thisMonth,
   description,
   visitors,
   text,
   footerHead,
   footerTail
 }: {
-  thisMonth: boolean;
   description: string;
   visitors: number;
   text: string;
@@ -48,7 +46,7 @@ export default function RadialChartComp({
   // const totalVisitors = chartData.reduce((sum, item)=> sum+=item.count, 0)
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col min-w-[276px]">
       <CardHeader className="items-center pb-0">
         <CardTitle>{text}</CardTitle>
         <CardDescription>{description}</CardDescription>

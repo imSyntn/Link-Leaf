@@ -36,9 +36,9 @@ const LogoutBtn = ({ user, setUser, classNames }: { user: userType, setUser: Rea
   };
   return (
     <button
-      className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent ${classNames} ${
+      className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent z-[52] ${classNames} ${
         btnClicked ? "opacity-50" : ""
-      } z-10`}
+      }`}
       onClick={handleLogOut}
       style={!user.isLoggedin ? { display: "none" } : {}}
       disabled={btnClicked ? true : false}

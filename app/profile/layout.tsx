@@ -42,7 +42,7 @@ export default function RootLayout({
     <>
       {user.isLoggedin && (
         <>
-          <div className="border-2 border-gray-700 rounded-lg mb-5 flex items-center flex-wrap gap-2 justify-between p-3 mx-6 mt-24">
+          <div className="border-2 border-gray-700 rounded-lg mb-5 flex items-center flex-wrap gap-2 justify-between p-3 mx-6 mt-24 relative">
             <div className=" flex items-center">
               <img
                 src={user.profilePic}

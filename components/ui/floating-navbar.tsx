@@ -47,6 +47,7 @@ export const FloatingNav = ({
   // });
 
   return (
+    <>
     <div
       // initial={{
       //   opacity: 1,
@@ -84,5 +85,7 @@ export const FloatingNav = ({
         <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
       </Link> */}
     </div>
+    {/* <div className="w-full bg-[#00000043] fixed top-0 h-20 z-40 backdrop-blur-sm"></div> */}
+    </>
   );
 };

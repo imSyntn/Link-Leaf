@@ -17,6 +17,8 @@ import { AiOutlineSpotify as Spotify } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { ShareBtn } from "@/components/ShareButton";
 import Svg from "./Svg";
+import { LoaderWrapper } from "@/components/Loader";
+import Link from "next/link";
 
 interface linkType {
   id: number;
@@ -105,9 +107,10 @@ const SharePage = () => {
             });
           } else {
             setData(e.data.userData[0]);
-            axios.post(`/api/share/visitors?id=${id}`)
-            .then(e=> console.log(e.data))
-            .catch(e=> console.log(e))
+            axios
+              .post(`/api/share/visitors?id=${id}`)
+              .then((e) => console.log(e.data))
+              .catch((e) => console.log(e));
           }
         })
         .catch(() =>
@@ -126,11 +129,7 @@ const SharePage = () => {
 
   return (
     <>
-      {loading && (
-        <div className="h-[100vh] w-[100vw] bg-black z-50 fixed top-0 left-0 flex justify-center items-center">
-          <div className="loader"></div>
-        </div>
-      )}
+      {loading && <LoaderWrapper />}
       <div className="min-h-[100vh] overflow-y-auto overflow-x-hidden">
         {id ? (
           <>
@@ -187,7 +186,7 @@ const SharePage = () => {
                               href={item.siteURL}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="w-12 h-12 flex justify-center items-center rounded-full mx-1 shadow-md bg-gradient-to-br from-[#f5f7fa] to-[#c3cfe2]"
+                              className="w-12 h-12 flex justify-center items-center rounded-full mx-1 shadow-md bg-gradient-to-br from-[#f5f7fa] to-[#c3cfe2] hover:shadow-[inset_0px_0px_50px_1px_#81e6d9]"
                               variants={itemVariants}
                               whileHover={{ scale: 1.2 }}
                             >
@@ -212,8 +211,11 @@ const SharePage = () => {
                           return (
                             <motion.div
                               key={item.id}
-                              className="relative flex items-center justify-between my-1 border border-gray-500 rounded-lg p-3 cursor-pointer hover:bg-[#000d1d6b]"
+                              className="linkCard relative flex items-center justify-between my-1 border border-gray-500 rounded-lg p-3 cursor-pointer hover:text-black"
                               variants={divItemVariants}
+                              // whileHover={{
+                              //   backgroundColor: 'white'
+                              // }}
                             >
                               <a
                                 href={item.siteURL}
@@ -249,6 +251,17 @@ const SharePage = () => {
                     </p>
                   </div>
                 )}
+                <div className="w-full flex justify-center mt-9">
+                  <Link href={'/signup'} className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-md font-semibold leading-6  text-white inline-block">
+                    <span className="absolute inset-0 overflow-hidden rounded-full">
+                      <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    </span>
+                    <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-2 px-6 ring-1 ring-white/10 ">
+                      <span>Join</span>
+                    </div>
+                    <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+                  </Link>
+                </div>
               </>
             )}
           </>
@@ -264,7 +277,7 @@ const SharePage = () => {
 
 const Share = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<LoaderWrapper />}>
       <SharePage />
     </Suspense>
   );

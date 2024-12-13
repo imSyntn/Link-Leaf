@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import LineChartComp from "./LineChart";
 import RadialChartComp from "./RadialChartComp";
 import axios from "axios";
 import { useUserContext } from "@/app/UserContext";
 import { useRouter } from "next/navigation";
+import Loader, { LoaderWrapper } from "@/components/Loader";
 
 const monthNames: string[] = [
   "Jan",
@@ -89,7 +90,11 @@ export interface chartDataType {
 //   },
 // ].sort((a, b) => a.month - b.month);
 
-export default function Page() {
+export default function PageWrapper () {
+  return <Suspense fallback={<LoaderWrapper />}><Page /></Suspense>
+}
+
+function Page() {
   const { user } = useUserContext();
 
   const [chartData, setCharData] = useState<chartDataType[] | null>(null);
@@ -120,16 +125,16 @@ export default function Page() {
         router.push("/signup");
       }, 1500);
     } else {
-      setLoading(true)
+      setLoading(true);
       axios
         .get(`/api/share/visitors?id=${user.id}`)
         .then((e) => {
-          const data = e.data.data.sort((a: any,b: any)=> a.month - b.month)
+          const data = e.data.data.sort((a: chartDataType, b: chartDataType) => a.month - b.month);
           setCharData(data);
           console.log(e.data.data);
         })
         .catch((e) => console.log(e))
-        .finally(()=> setLoading(false))
+        .finally(() => setLoading(false));
     }
     return () => {
       clearTimeout(timer);
@@ -137,14 +142,12 @@ export default function Page() {
   }, [user]);
 
   return (
-    <div className="min-h-[100vh] flex gap-5 justify-center items-center flex-wrap">
-      {/* <div className=" flex justify-between items-center gap-5 flex-wrap mb-4"> */}
+    <div className="min-h-[80vh] flex gap-5 justify-center items-center flex-wrap">
       {user.isLoggedin ? (
         !loading ? (
           chartData && Array.isArray(chartData) && chartData.length > 0 ? (
             <>
               <RadialChartComp
-                thisMonth={false}
                 description={`${monthNames[chartData[0].month - 1]} to ${
                   monthNames[MonthlyVisitorsObj.month - 1]
                 }`}
@@ -154,7 +157,6 @@ export default function Page() {
                 footerTail={"Cumulative views."}
               />
               <RadialChartComp
-                thisMonth={false}
                 description={monthNames[MonthlyVisitorsObj.month - 1]}
                 visitors={Math.floor(MonthlyVisitorsObj.count)}
                 text="Monthly Visitors"
@@ -162,7 +164,6 @@ export default function Page() {
                 footerTail={"Cumulative views."}
               />
               <RadialChartComp
-                thisMonth={false}
                 description={`${monthNames[chartData[0].month - 1]} to ${
                   monthNames[MonthlyVisitorsObj.month - 1]
                 }`}
@@ -171,14 +172,15 @@ export default function Page() {
                 footerHead={"Average views updated recently"}
                 footerTail={"Average views."}
               />
-              {/* </div> */}
               <LineChartComp monthNames={monthNames} chartData={chartData} />
             </>
           ) : (
             <p className="text-2xl">No data available ...</p>
           )
         ) : (
-          <p className="text-2xl">Loading ...</p>
+          <div className="">
+            <Loader />
+          </div>
         )
       ) : (
         <p className="text-2xl">You are being redirected ...</p>

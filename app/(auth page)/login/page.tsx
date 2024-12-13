@@ -110,7 +110,8 @@ export default function LogInForm() {
           </button>
 
           <div className="loginDiv mt-4">
-            <p>Have an Accocunt? <Link href={'/signup'} className="text-blue-600">Sign up</Link></p>
+            <p>New to Link Leaf ? <Link href={'/signup'} className="text-blue-600">Sign up</Link></p>
+            <p className="mt-1"> Forgot Your Password? <Link href={'/forgot-password'} className="text-blue-600">Click here</Link></p>
           </div>
         </form>
       </div>
