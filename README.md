@@ -1,4 +1,7 @@
-<div style='display:flex;'><img src='https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Link_Leaf-Transparent.png' style='width: 30; height:30; margin-top:5; margin-right:5' /><h1>Link Leaf</h1></div>
+<p >
+  <img src="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Link_Leaf-Transparent.png" alt="Link Leaf Logo" width="30" height="30" style="vertical-align: middle; margin-right: 5px;" />
+  <h1 style="font-weight: bold;">Link Leaf</h1>
+</p>
 
 Link Leaf is a modern platform designed to help users organize and share links effortlessly. Create a personalized hub, streamline your content, and connect with your audience—all in one place.  
 ## Features
