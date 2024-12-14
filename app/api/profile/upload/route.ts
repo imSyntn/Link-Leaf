@@ -23,8 +23,6 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     const img = formData.get("image") as File
 
-    console.log(id)
-
     if (!img || !id) {
         return NextResponse.json({
             status: 400,

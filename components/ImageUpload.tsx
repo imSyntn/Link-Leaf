@@ -29,7 +29,6 @@ export function UploadImage({ user, setUser }: { user: userType, setUser: React.
         formData.append('image', file)
 
         axios.post(`/api/profile/upload?id=${user.id}`, formData).then((e) => {
-            console.log(e.data)
             if (e.data.status > 400) {
                 toast({
                     title: 'Error.',
@@ -54,7 +53,6 @@ export function UploadImage({ user, setUser }: { user: userType, setUser: React.
 
     const handleFile = (files: File[]) => {
         setFile(files[0]);
-        console.log(files[0]);
     }
 
     return (

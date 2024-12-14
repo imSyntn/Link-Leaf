@@ -43,7 +43,6 @@ export default function LogInForm() {
               description: data.msg
             })
           } else {
-            console.log(data)
             setUser({
               name: data.name,
               isLoggedin: true,

@@ -131,7 +131,6 @@ function Page() {
         .then((e) => {
           const data = e.data.data.sort((a: chartDataType, b: chartDataType) => a.month - b.month);
           setCharData(data);
-          console.log(e.data.data);
         })
         .catch((e) => console.log(e))
         .finally(() => setLoading(false));

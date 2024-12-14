@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { useUserContext } from "../UserContext";
 import LogoutBtn from "@/components/LogoutBtn";
+import Image from "next/image";
 // import '@/app/globals.css'
 // import { useUpdate } from "@/hooks/useUpdate";
 
@@ -44,10 +45,12 @@ export default function RootLayout({
         <>
           <div className="border-2 border-gray-700 rounded-lg mb-5 flex items-center flex-wrap gap-2 justify-between p-3 mx-6 mt-24 relative">
             <div className=" flex items-center">
-              <img
+              <Image
                 src={user.profilePic}
                 alt="profile pic"
-                className="w-16 h-16 rounded-full"
+                width={64}
+                height={64}
+                className="rounded-full"
               />
 
               <div className="text flex flex-col items-center">

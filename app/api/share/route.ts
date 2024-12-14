@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     })
 
     try {
-        const userData = await prisma.user.findMany({
+        const userData = await prisma.user.findFirst({
             where: {
                 id: parseInt(id)
             },
@@ -23,7 +23,8 @@ export async function GET(request: NextRequest) {
                 name: true,
                 links: true,
                 profilePic: true,
-                description: true
+                description: true,
+                id: true
             }
         })
         if (userData) {
@@ -31,6 +32,11 @@ export async function GET(request: NextRequest) {
                 status: 200,
                 userData,
                 msg: 'Ok.'
+            })
+        } else {
+            return NextResponse.json({
+                status: 200,
+                msg: 'No users'
             })
         }
 

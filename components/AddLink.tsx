@@ -54,13 +54,11 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
   }
 
   const handleProfileEdit = () => {
-    console.log('edit')
     axios.patch('/api/profile/update', {
       name: inputData.siteName,
       description: inputData.description
     }, { withCredentials: true })
       .then(e => {
-        console.log(e)
         if (e.data.status >= 400) {
           toast({
             title: "Error",
@@ -85,14 +83,12 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
   }
 
   const handleSubmit = () => {
-    console.log(1)
     setBtnClicked(true)
     if (editProfile) {
       handleProfileEdit()
     } else {
       axios.post('/api/profile', inputData, { withCredentials: true })
         .then(e => {
-          console.log(e)
           if (e.data.status == 400) {
             toast({
               title: "Error",
@@ -128,7 +124,6 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
     if (urlObj) {
       axios.patch(`/api/profile?linkId=${urlObj.id}`, inputData)
         .then(e => {
-          console.log(e)
           if (e.data.status == 400) {
             toast({
               title: "Error",
@@ -169,7 +164,6 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
         params: { id: urlObj.id }
       })
         .then(e => {
-          console.log(e)
           if (e.data.status == 400) {
             toast({
               title: "Error",

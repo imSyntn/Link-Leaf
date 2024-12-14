@@ -26,7 +26,6 @@ export default function LogInForm() {
 
   const handleEmailVarify = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("email varify");
     if (emailRef.current && passwordRef.current) {
       const emailVal = emailRef.current.value;
       const passwordVal = passwordRef.current.value;

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
+import Image from "next/image"
 
 export function ShareBtn({ header, description, link }: { header: string, description: string, link: string }) {
   const { toast } = useToast()
@@ -42,9 +43,9 @@ export function ShareBtn({ header, description, link }: { header: string, descri
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex flex-col items-center">
-          <img src="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/qr-code.gif" className="rounded-full w-12" alt="scan qr gif" />
+          <Image width={48} height={48} src="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/qr-code.gif" className="rounded-full" alt="scan qr gif" />
           <h1 className="my-2 font-medium text-lg tracking-wide">Scan QR</h1>
-          <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURI(link)}&size=150x150`} className="mb-2 w-[150px] h-[150px] border border-gray-100" alt="QR" />
+          <Image width={150} height={150}  src={`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURI(link)}&size=150x150`} className="mb-2 border border-gray-100" alt="QR" />
           <h1 className="font-medium text-lg tracking-wide">or</h1>
           <p>copy link</p>
         </div>

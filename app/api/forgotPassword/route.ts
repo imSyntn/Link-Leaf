@@ -81,13 +81,16 @@ export async function POST(request: NextRequest) {
     `,
       });
       if (info.messageId) {
-        console.log(info);
         return NextResponse.json({
           status: 200,
           msg: info,
         });
       } else {
-        console.log(info);
+        return NextResponse.json({
+          status: 500,
+          msg: "Error in sending message",
+          // msg: error,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -99,6 +102,11 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.log(error);
+    return NextResponse.json({
+      status: 500,
+      msg: "Server Error.",
+      // msg: error,
+    });
   }
 }
 
@@ -133,7 +141,7 @@ export async function PATCH(request: NextRequest) {
         },
         data: {
           otp: otp,
-          password: isValid.userName,
+          password: isValid.userName!,
           userName: "",
         },
       });

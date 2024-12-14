@@ -48,7 +48,6 @@ const Profile = () => {
       axios
         .get("/api/profile", { withCredentials: true })
         .then((e) => {
-          console.log(e);
           setUserLinks(e.data);
         })
         .catch((e) => console.log(e))

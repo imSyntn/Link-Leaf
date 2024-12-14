@@ -46,7 +46,6 @@ export async function POST(request: NextRequest) {
 
     } catch (error) {
         console.log(error)
-        await prisma.$disconnect()
         return NextResponse.json({
             status: 400,
             msg: 'Error Occured.'

@@ -63,7 +63,6 @@ export default function DrawerComp() {
             otp: otpRef.current?.value
         }, { withCredentials: true })
         .then((e)=> {
-            console.log(e.data)
             if(e.data.status == 400) {
                 toast({
                     title: 'Error',

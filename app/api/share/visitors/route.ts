@@ -66,7 +66,10 @@ export async function GET(request: NextRequest) {
   const id = searchParams.get('id')
 
   if(!id) {
-    return
+    return NextResponse.json({
+      status: 400,
+      msg: "Id not available.",
+    });
   }
 
   try {

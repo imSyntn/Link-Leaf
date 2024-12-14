@@ -142,12 +142,11 @@ export async function DELETE(request: NextRequest) {
     }
 
     try {
-        const deletedLink = await prisma.link.delete({
+        await prisma.link.delete({
             where: {
                 id: parseInt(id)
             }
         })
-        console.log(deletedLink)
         return NextResponse.json({
             status: 200,
             msg: 'Deleted Successfully.'

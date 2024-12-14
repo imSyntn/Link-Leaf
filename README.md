@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div style='display:flex;'><img src='https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Link_Leaf-Transparent.png' style='width: 30; height:30; margin-top:5; margin-right:5' /><h1>Link Leaf</h1></div>
 
-## Getting Started
+Link Leaf is a modern platform designed to help users organize and share links effortlessly. Create a personalized hub, streamline your content, and connect with your audience—all in one place.  
+## Features
 
-First, run the development server:
+- Create and customize your link hub.  
+- Upload and manage media with Cloudinary integration.  
+- Fully responsive design with Tailwind CSS.  
+- Optimized for performance with Next.js.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: Framework for building fast and scalable web applications.  
+- **PostgreSQL**: Relational database for efficient data management.  
+- **Prisma**: ORM for seamless database interactions.  
+- **Cloudinary**: Media management and storage solution.  
+- **Tailwind CSS**: Utility-first CSS framework for modern UI design.  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More  
+## Prerequisites   
+- Node.js (v16 or higher)  
+- PostgreSQL  
 
-To learn more about Next.js, take a look at the following resources:
+## Run Locally  
+- Clone the repository:  
+   ```bash
+   git clone https://github.com/imSyntn/Link-Leaf
+   ```
+- Go to the project directory
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+     cd Link-Leaf
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Start PostgreSQL
 
-## Deploy on Vercel
+- Set up your ```.env``` file
+   - Duplicate `.env.example` to `.env`
+   - Add your own keys
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Install Dependencies
+  ```bash
+    npm i
+  ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Run
+  ```bash
+    npm run dev
+  ```
+
+## Contact
+
+- **Gmail:** [imsyntn@gmail.com](imsyntn@gmail.com)
+- **Linkedin:**  [Linkedin](https://www.linkedin.com/in/imsyntn)
+- **Twitter:** [Twitter](https://x.com/imsyntn)
+
+Happy coding!🚀

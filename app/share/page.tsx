@@ -19,6 +19,7 @@ import { ShareBtn } from "@/components/ShareButton";
 import Svg from "./Svg";
 import { LoaderWrapper } from "@/components/Loader";
 import Link from "next/link";
+import Image from "next/image";
 
 interface linkType {
   id: number;
@@ -35,6 +36,7 @@ interface dataType {
   links: linkType[];
   profilePic: string;
   description: string;
+  id: number
 }
 
 const containerVariants = {
@@ -106,10 +108,9 @@ const SharePage = () => {
               description: e.data.msg,
             });
           } else {
-            setData(e.data.userData[0]);
+            setData(e.data.userData);
             axios
               .post(`/api/share/visitors?id=${id}`)
-              .then((e) => console.log(e.data))
               .catch((e) => console.log(e));
           }
         })
@@ -121,20 +122,20 @@ const SharePage = () => {
         )
         .finally(() => setLoading(false));
     }
-  }, []);
+  }, [id]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log('data',data);
+  // }, [data]);
 
   return (
     <>
       {loading && <LoaderWrapper />}
-      <div className="min-h-[100vh] overflow-y-auto overflow-x-hidden">
-        {id ? (
+      <div className="min-h-[100vh] overflow-y-auto overflow-x-hidden relative">
+        {(id && data?.id) ? (
           <>
             <div className="relative flex justify-center items-end">
-              <Svg TailwindClass="h-[100%] absolute left-[50%] bottom-0 translate-x-[-50%]" />
+              <Svg pic={data.profilePic} TailwindClass="h-[100%] absolute left-[50%] bottom-0 translate-x-[-50%]" />
               {/* <img src="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/svg.png" className='h-[100%] w-[100vw]  absolute left-[50%] bottom-0 translate-x-[-50%]' alt="" /> */}
               <motion.img
                 src={data?.profilePic}
@@ -144,7 +145,7 @@ const SharePage = () => {
                   opacity: 0,
                   y: "35px",
                 }}
-                animate={{
+                animate={!loading && {
                   opacity: 1,
                   y: 0,
                   transition: {
@@ -156,8 +157,8 @@ const SharePage = () => {
             {data && !loading && (
               <>
                 <div className="details flex flex-col justify-between items-center px-5 sm:px-10">
-                  <h1 className="text-3xl my-3">{data.name}</h1>
-                  <p className="text-center">{data.description}</p>
+                  <h1 className="text-3xl font-semibold tracking-wide my-3">{data.name}</h1>
+                  <p className="text-center text-lg">{data.description}</p>
                 </div>
                 {data.links.length > 0 ? (
                   <motion.div
@@ -222,10 +223,12 @@ const SharePage = () => {
                                 target="_blank"
                                 className=" w-[100%] flex items-center justify-between"
                               >
-                                <img
+                                <Image
+                                  width={40}
+                                  height={40}
                                   src={`https://www.google.com/s2/favicons?domain=${item.siteURL}&sz=128`}
                                   alt={item.siteName}
-                                  className="w-10 h-10 rounded-sm"
+                                  className="rounded-sm"
                                 />
                                 <p className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
                                   {item.description}
@@ -252,7 +255,10 @@ const SharePage = () => {
                   </div>
                 )}
                 <div className="w-full flex justify-center mt-9">
-                  <Link href={'/signup'} className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-md font-semibold leading-6  text-white inline-block">
+                  <Link
+                    href={"/signup"}
+                    className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-md font-semibold leading-6  text-white inline-block"
+                  >
                     <span className="absolute inset-0 overflow-hidden rounded-full">
                       <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     </span>
@@ -266,8 +272,8 @@ const SharePage = () => {
             )}
           </>
         ) : (
-          <p className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-nowrap text-xl">
-            Please provide an ID ...
+          <p className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-nowrap text-2xl">
+            No users available ...
           </p>
         )}
       </div>

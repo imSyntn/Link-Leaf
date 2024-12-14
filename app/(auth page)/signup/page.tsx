@@ -41,8 +41,7 @@ export default function SignupForm() {
           email: emailRef.current.value,
           password: passwordRef.current.value
         }).then((e) => {
-          console.log(e)
-          if (e.data.status === 400) {
+          if (e.data.status >= 400) {
             toast({
               title: 'Error',
               description: 'User already exist.'

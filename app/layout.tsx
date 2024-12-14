@@ -6,6 +6,7 @@ import { Navbar } from "@/components/NavBar";
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { Toaster } from "@/components/ui/toaster";
 import Link from "next/link";
+import Image from "next/image";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,6 +31,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta property="og:title" content="Link Leaf" />
+      <meta
+        property="og:description"
+        content="Your all-in-one hub to organize and share links effortlessly."
+      />
+      {/* <meta property="og:url" content="https://www.imdb.com/title/tt0117500/" /> */}
+      <meta
+        property="og:image"
+        content="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Screenshot%202024-11-27%20180817.png"
+      />
+      <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark h-[100vh] relative`}
       >
@@ -41,7 +53,16 @@ export default function RootLayout({
             href={"/"}
             className="fixed top-3 left-7 text-3xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed [lg:leading-snug] z-50 "
           >
-            <Highlight className="text-black sm:text-3xl dark:text-white z-20">
+            <Image
+              src={
+                "https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Link_Leaf-Transparent.png"
+              }
+              width={40}
+              height={40}
+              alt="Logo"
+              className="custom-2:block hidden"
+            />
+            <Highlight className="text-black custom-2:!hidden block sm:text-3xl dark:text-white z-20">
               Link Leaf
             </Highlight>
           </Link>

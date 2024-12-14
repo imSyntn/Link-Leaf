@@ -72,13 +72,16 @@ export async function GET() {
         `,
       });
       if (info.messageId) {
-        console.log(info);
         return NextResponse.json({
           status: 200,
           msg: info,
         });
       } else {
-        console.log(info);
+        return NextResponse.json({
+          status: 500,
+          msg: "Error in sending message",
+          // msg: error,
+        });
       }
     } catch (error) {
       console.log(error);
