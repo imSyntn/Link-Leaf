@@ -43,7 +43,7 @@ export default function RootLayout({
       />
       <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark h-[100vh] relative`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark h-[100vh] relative scrollbar`}
       >
         <UserContextProvider>
           {/* <div className="h-[100vh] overflow-y-auto"> */}

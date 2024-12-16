@@ -51,6 +51,7 @@ export default function RootLayout({
                 width={64}
                 height={64}
                 className="rounded-full"
+                unoptimized={user.profilePic.includes('.gif') ? true : false}
               />
 
               <div className="text flex flex-col items-center">

@@ -16,6 +16,8 @@ import { ShareBtn } from "@/components/ShareButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useUpdate } from "@/hooks/useUpdate";
+import Preview from "@/components/Preview";
+import { AnimatePresence } from "framer-motion";
 
 // import { ToastAction } from '@/components/ui/toast'
 
@@ -28,7 +30,7 @@ const Profile = () => {
   // const [update, setUpdate] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [userLinks, setUserLinks] = useState<urlType[]>([]);
-
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -55,10 +57,6 @@ const Profile = () => {
     }
   }, [update]);
 
-  // const changeUpdate = useCallback(() => {
-  //   setUpdate((prev) => !prev);
-  // }, [update]);
-
   return (
     <div className="min-h-[100vh] relative">
       {!user.isLoggedin ? (
@@ -66,36 +64,49 @@ const Profile = () => {
           You are being redirected ...
         </p>
       ) : (
-        <div className="Profile h-auto px-6 w-full">
-          <div className="userLinks flex flex-col items-center w-full">
-            <div className="flex w-full justify-center gap-2">
-              <AddLink
-                buttonText="Add New"
-                delBtn={false}
-                urlObj={null}
+        <>
+          <div className="Profile h-auto px-6 w-full">
+            <div className="userLinks flex flex-col items-center w-full">
+              <div className="flex flex-wrap w-full justify-center gap-2">
+                <AddLink
+                  buttonText="Add New"
+                  delBtn={false}
+                  urlObj={null}
+                  changeUpdate={changeUpdate}
+                  editProfile={false}
+                />
+                <Button
+                  variant={"outline"}
+                  // onClick={() => router.push("/analytics")}
+                  className="border-white bg-white text-black"
+                >
+                  <Link href={"profile/analytics"}>Analytics</Link>
+                </Button>
+                <Button
+                  variant={"outline"}
+                  className="border-white bg-white text-black"
+                  onClick={() => setShowPreview(true)}
+                >
+                  Preview
+                </Button>
+                <ShareBtn
+                  header="Profile"
+                  description="Share all your social links in one place with dynamic animations and a clean interface."
+                  link={`${window.location.origin}/share?id=${user.id}`}
+                />
+              </div>
+              <UrlContainer
                 changeUpdate={changeUpdate}
-                editProfile={false}
-              />
-              <Button
-                variant={"outline"}
-                // onClick={() => router.push("/analytics")}
-                className="border-white bg-white text-black"
-              >
-                <Link href={"profile/analytics"}>Analytics</Link>
-              </Button>
-              <ShareBtn
-                header="Profile"
-                description="Share all your social links in one place with dynamic animations and a clean interface."
-                link={`${window.location.origin}/share?id=${user.id}`}
+                loading={loading}
+                userLinks={userLinks}
+                setUserLinks={setUserLinks}
               />
             </div>
-            <UrlContainer
-              changeUpdate={changeUpdate}
-              loading={loading}
-              userLinks={userLinks}
-            />
           </div>
-        </div>
+          <AnimatePresence>
+            {showPreview && <Preview setShowPreview={setShowPreview} userLinks={userLinks} />}
+          </AnimatePresence>
+        </>
       )}
     </div>
   );

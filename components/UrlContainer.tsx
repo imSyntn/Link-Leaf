@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useUserContext } from "@/app/UserContext";
 import UrlCard from "./UrlCard";
 import Loader from "./Loader";
+import {Reorder} from 'framer-motion'
+import axios from "axios";
 
 export interface urlType {
   siteName: string;
@@ -14,20 +16,47 @@ const UrlContainer = ({
   changeUpdate,
   loading,
   userLinks,
+  setUserLinks
 }: {
   changeUpdate: () => void;
   loading: boolean;
   userLinks: urlType[];
+  setUserLinks: React.Dispatch<React.SetStateAction<urlType[]>>
 }) => {
   const { user } = useUserContext();
+  const reorderRef = useRef(false)
+  // const [activeCard, setActiveCard] = useState<number | null>(null);
+  
+  // const onDrop = (index:number) => {
+  //   if (activeCard == index || !activeCard) return null
+  //   const newLinks = [...userLinks]
+  //   const [card] = newLinks.splice(activeCard, 1)
+  //   newLinks.splice(index, 0, card)
+  //   setUserLinks(newLinks)
+  // };
 
-  // useEffect(() => {
-  //   console.log(userLinks)
-  // }, [userLinks])
+  const updateOrder = useCallback(async() => {
+    const {data} = await axios.put('/api/profile/update', userLinks )
+    console.log(data)
+    reorderRef.current = false
+  },[userLinks])
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout >;
+    console.log(userLinks);
+
+    setTimeout(()=> {
+      if(reorderRef.current) {
+        updateOrder()
+      }
+    }, 1000)
+
+    return () => clearTimeout(timer)
+  }, [userLinks]);
 
   return (
     <div
-      className={` w-full border-2 border-gray-700 mt-6 relative overflow-x-auto shadow-md sm:rounded-lg ${
+      className={`relative mt-6 w-full overflow-x-auto border-2 border-gray-700 shadow-md rounded-lg ${
         user.isLoggedin ? "" : "border-none"
       }`}
     >
@@ -40,31 +69,21 @@ const UrlContainer = ({
           <Loader />
         </div>
       ) : userLinks.length < 1 ? (
-        <h2 className="text-center my-6 text-xl">No Links Available.</h2>
+        <h2 className="my-6 text-center text-xl">No Links Available.</h2>
       ) : (
-        <table className="w-full text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-          <thead className="border-b text-lg text-gray-700 uppercas dark:text-white bg-[#1e293b4a]">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Site Name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Site URL
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Description
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {userLinks.map((item: urlType, index: number) => (
-              <UrlCard key={index} urlObj={item} changeUpdate={changeUpdate} />
-            ))}
-          </tbody>
-        </table>
+        <Reorder.Group axis="y" onReorder={(newOrder)=> {
+          reorderRef.current = true;
+          setUserLinks(newOrder)
+        }} values={userLinks} className="px-6 py-2">
+          {/* <DropArea onDrop={()=> onDrop(0)} /> */}
+          {userLinks.map((item: urlType, index: number) => (
+              <UrlCard key={item.id}
+                index={index}
+                urlObj={item}
+                changeUpdate={changeUpdate}
+              />
+          ))}
+        </Reorder.Group>
       )}
     </div>
   );

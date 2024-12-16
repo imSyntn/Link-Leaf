@@ -7,8 +7,8 @@ const Contact = () => {
           <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">Get in Touch</h2>
           <p className="text-xl text-gray-600 dark:text-gray-300">
             Have feedback, questions, or suggestions? Drop us an email at 
-            <a href="mailto:support@linkleaf.com" className="text-emerald-300 hover:text-emerald-400 ml-2 no-underline">
-               support@linkleaf.com
+            <a href="mailto:imsyntn@gmail.com" className="text-emerald-300 hover:text-emerald-400 ml-2 no-underline">
+               imsyntn@gmail.com
             </a>.
           </p>
           {/* <p className="mt-4 text-gray-600 dark:text-gray-300">

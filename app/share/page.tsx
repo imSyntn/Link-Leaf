@@ -5,15 +5,15 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import "@/app/share/sharePage.css";
 import { useToast } from "@/hooks/use-toast";
-import { dropdownValue } from "@/lib/DropdownValue";
-import {
-  FaXTwitter as Twitter,
-  FaInstagram as Instagram,
-} from "react-icons/fa6";
-import { FiYoutube as Youtube } from "react-icons/fi";
-import { BsTiktok as Tiktok } from "react-icons/bs";
-import { BiLogoLinkedin as Linkedin } from "react-icons/bi";
-import { AiOutlineSpotify as Spotify } from "react-icons/ai";
+import { dropdownValue, iconSelect } from "@/lib/DropdownValue";
+// import {
+//   FaXTwitter as Twitter,
+//   FaInstagram as Instagram,
+// } from "react-icons/fa6";
+// import { FiYoutube as Youtube } from "react-icons/fi";
+// import { BsTiktok as Tiktok } from "react-icons/bs";
+// import { BiLogoLinkedin as Linkedin } from "react-icons/bi";
+// import { AiOutlineSpotify as Spotify } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { ShareBtn } from "@/components/ShareButton";
 import Svg from "./Svg";
@@ -21,7 +21,7 @@ import { LoaderWrapper } from "@/components/Loader";
 import Link from "next/link";
 import Image from "next/image";
 
-interface linkType {
+export interface linkType {
   id: number;
   siteName: string;
   siteURL: string;
@@ -29,7 +29,7 @@ interface linkType {
   userId: number;
 }
 
-interface dataType {
+export interface dataType {
   email: string;
   isVarified: boolean;
   name: string;
@@ -44,7 +44,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, // Controls the delay between each child's animation
+      staggerChildren: 0.1,
     },
   },
 };
@@ -73,21 +73,7 @@ const divItemVariants = {
   },
 };
 
-const iconSelect = (name: string) => {
-  if (name == "twitter") {
-    return Twitter;
-  } else if (name == "youtube") {
-    return Youtube;
-  } else if (name == "instagram") {
-    return Instagram;
-  } else if (name == "tiktok") {
-    return Tiktok;
-  } else if (name == "linkedin") {
-    return Linkedin;
-  } else if (name == "spotify") {
-    return Spotify;
-  } else return null;
-};
+
 
 const SharePage = () => {
   const searchParams = useSearchParams();
@@ -197,7 +183,7 @@ const SharePage = () => {
                         }
                       })}
                     </div>
-                    <div className="flex flex-col px-5 sm:px-10">
+                    <div className="flex flex-col items-center px-5">
                       {data.links.map((item: linkType) => {
                         if (
                           !dropdownValue
@@ -212,7 +198,7 @@ const SharePage = () => {
                           return (
                             <motion.div
                               key={item.id}
-                              className="linkCard relative flex items-center justify-between my-1 border border-gray-500 rounded-lg p-3 cursor-pointer hover:text-black"
+                              className="linkCard relative flex items-center justify-between my-1 border rounded-full border-gray-500 py-3 px-6 cursor-pointer hover:text-black w-full sm:w-[600px]"
                               variants={divItemVariants}
                               // whileHover={{
                               //   backgroundColor: 'white'
@@ -281,7 +267,7 @@ const SharePage = () => {
   );
 };
 
-const Share = () => {
+const Page = () => {
   return (
     <Suspense fallback={<LoaderWrapper />}>
       <SharePage />
@@ -289,4 +275,4 @@ const Share = () => {
   );
 };
 
-export default Share;
+export default Page;

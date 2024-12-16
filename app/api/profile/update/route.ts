@@ -61,3 +61,10 @@ export async function PATCH(request: NextRequest) {
     });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  const data = await request.json()
+  return NextResponse.json({
+    data
+  })
+}
