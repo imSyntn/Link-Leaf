@@ -34,13 +34,14 @@ model Link {
   description String?
   author      User    @relation(fields: [userId], references: [id])
   userId      Int
+  sortOrder   Int @default(autoincrement())
 }
 
 model Visitors {
-  id          Int      @id @default(autoincrement())
+  id          Int  @id @default(autoincrement())
   year        Int?
   month       Int?
-  count       Int      @default(1)
-  userProfile User     @relation(fields: [userId], references: [id])
+  count       Int  @default(1)
+  userProfile User @relation(fields: [userId], references: [id])
   userId      Int
 }

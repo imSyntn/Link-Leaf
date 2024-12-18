@@ -41,7 +41,8 @@ export default function RootLayout({
         property="og:image"
         content="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Screenshot%202024-11-27%20180817.png"
       />
-      <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
+      <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Link_Leaf-Transparent.png" />
+      <link rel="icon" href="https://res.cloudinary.com/dqn1hcl8c/image/upload/v1734521256/favicon_lujpx4.ico" type="image/x-icon" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark h-[100vh] relative scrollbar`}
       >

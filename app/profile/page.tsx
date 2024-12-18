@@ -50,7 +50,8 @@ const Profile = () => {
       axios
         .get("/api/profile", { withCredentials: true })
         .then((e) => {
-          setUserLinks(e.data);
+          const data = e.data.sort((a:urlType,b:urlType)=> a.sortOrder - b.sortOrder)
+          setUserLinks(data);
         })
         .catch((e) => console.log(e))
         .finally(() => setLoading(false));

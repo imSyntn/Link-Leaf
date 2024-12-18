@@ -27,6 +27,7 @@ export interface linkType {
   siteURL: string;
   description: string;
   userId: number;
+  sortOrder: number
 }
 
 export interface dataType {
@@ -95,6 +96,7 @@ const SharePage = () => {
             });
           } else {
             setData(e.data.userData);
+            // console.log(e.data.userData)
             axios
               .post(`/api/share/visitors?id=${id}`)
               .catch((e) => console.log(e));
@@ -146,7 +148,7 @@ const SharePage = () => {
                   <h1 className="text-3xl font-semibold tracking-wide my-3">{data.name}</h1>
                   <p className="text-center text-lg">{data.description}</p>
                 </div>
-                {data.links.length > 0 ? (
+                {data.links.sort((a,b)=> a.sortOrder - b.sortOrder).length > 0 ? (
                   <motion.div
                     variants={containerVariants}
                     initial="hidden"
@@ -177,14 +179,14 @@ const SharePage = () => {
                               variants={itemVariants}
                               whileHover={{ scale: 1.2 }}
                             >
-                              {<Icon className="text-black text-2xl" />}
+                              <Icon className="text-black text-3xl" />
                             </motion.a>
                           );
                         }
                       })}
                     </div>
                     <div className="flex flex-col items-center px-5">
-                      {data.links.map((item: linkType) => {
+                      {data.links.sort((a,b)=> a.sortOrder - b.sortOrder).map((item: linkType) => {
                         if (
                           !dropdownValue
                             .slice(0, dropdownValue.length - 1)

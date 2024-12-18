@@ -18,9 +18,9 @@ const containerVatients = {
     scale: 1,
     opacity: 1,
   },
-  transition: {
-    duration: 0.3,
-  },
+    transition: {
+      duration: 0.1,
+    }
 };
 
 const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
@@ -39,7 +39,7 @@ const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="absolute top-[-50px] right-[-100px] rounded-full w-96 h-96 bg-[#00000000] backdrop-blur-lg flex flex-col items-center justify-center gap-5"
+            className="absolute top-[-20px] right-[-20px] w-96 h-96 rounded-2xl bg-[#00000077] backdrop-blur-lg flex flex-col items-center justify-center gap-5"
             variants={containerVatients}
             initial="hidden"
             animate="visible"
@@ -50,8 +50,9 @@ const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
                 key={item.name}
                 href={item.link}
                 className={`block relative w-fit text-md font-bold tracking-wider z-[51] blend-difference ${
-                  item.link == pathname ?
-                  "border border-neutral-200 dark:border-white  px-4 py-2 rounded-full" : ''
+                  item.link == pathname
+                    ? "border border-neutral-200 dark:border-white  px-4 py-2 rounded-full"
+                    : ""
                 }`}
               >
                 {item.name}

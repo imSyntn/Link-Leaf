@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import * as jwt from "jsonwebtoken";
 import { JwtPayload } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
+import { urlType } from "@/components/UrlContainer";
 
 const prisma = new PrismaClient();
 
@@ -49,7 +50,7 @@ export async function PATCH(request: NextRequest) {
         name: true,
         isVarified: true,
         id: true,
-        profilePic: true
+        profilePic: true,
       },
     });
     return NextResponse.json(userData);
@@ -62,9 +63,46 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
+
 export async function PUT(request: NextRequest) {
-  const data = await request.json()
+  const userLinks = await request.json();
+  const id = request.nextUrl.searchParams.get("id");
+  console.log(id);
+
+  // const caseStatements = userLinks.map((item: urlType, index:number) => `WHEN $${index + 1} THEN $${index + 2}`)
+  // .join(' ');
+  // console.log(cases);
+  // const ids = userLinks.map((item: urlType) => item.id);
+  // console.log(ids);
+
+  if(!id) {
+    return NextResponse.json({
+      status: 400,
+      msg: 'Id is not available.'
+    });
+  }
+
+  try {
+    await prisma.$queryRawUnsafe(`
+    UPDATE "Link"
+    SET "sortOrder" = CASE "id"
+    ${userLinks
+      .map((item: urlType) => `WHEN ${item.id} THEN ${item.sortOrder}`)
+      .join(" ")}
+    ELSE "sortOrder"
+    END
+    WHERE "userId" = ${id};
+  `);
+
   return NextResponse.json({
-    data
-  })
+    status: 200,
+    msg: 'updated'
+  });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({
+      status: 500,
+      msg: "Error occured.",
+    });
+  }
 }

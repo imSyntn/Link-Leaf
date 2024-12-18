@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import HamburgerMenu from "./HamburgerMenu";
 
 export interface navItemsType {
-  name: string,
-  link: string
+  name: string;
+  link: string;
 }
 
-const navItems:navItemsType[] = [
+const navItems: navItemsType[] = [
   {
     name: "Home",
     link: "/",
@@ -36,18 +36,18 @@ export function Navbar() {
   // },[pathname])
 
   return (
-    // <div className="relative  w-full">
-    // {
-    pathname !== "/share" && (
-      <>
-        <FloatingNav
-          navItems={navItems}
-          pathname={pathname}
-          className="min-h-[55.2px] hidden sm:flex"
-        />
-        <HamburgerMenu navItems={navItems} />
-      </>
-    )
+    // <div className="fixed top-0 left-0 z-40 h-[70px] backdrop-blur-md w-full">
+      // {
+        pathname !== "/share" && (
+        <>
+          <FloatingNav
+            navItems={navItems}
+            pathname={pathname}
+            className="min-h-[55.2px] hidden sm:flex"
+          />
+          <HamburgerMenu navItems={navItems} />
+        </>
+      )
     // }
     // </div>
   );
