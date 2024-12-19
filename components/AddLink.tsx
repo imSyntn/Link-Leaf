@@ -89,7 +89,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
     } else {
       axios.post('/api/profile', inputData, { withCredentials: true })
         .then(e => {
-          if (e.data.status == 400) {
+          if (e.data.status >= 400) {
             toast({
               title: "Error",
               description: "Error occured."
@@ -124,7 +124,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
     if (urlObj) {
       axios.patch(`/api/profile?linkId=${urlObj.id}`, inputData)
         .then(e => {
-          if (e.data.status == 400) {
+          if (e.data.status >= 400) {
             toast({
               title: "Error",
               description: "Error occured."
@@ -164,7 +164,7 @@ export function AddLink({ buttonText, delBtn = false, urlObj, changeUpdate, edit
         params: { id: urlObj.id }
       })
         .then(e => {
-          if (e.data.status == 400) {
+          if (e.data.status >= 400) {
             toast({
               title: "Error",
               description: "Error occured."

@@ -67,7 +67,6 @@ export async function PATCH(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   const userLinks = await request.json();
   const id = request.nextUrl.searchParams.get("id");
-  console.log(id);
 
   // const caseStatements = userLinks.map((item: urlType, index:number) => `WHEN $${index + 1} THEN $${index + 2}`)
   // .join(' ');

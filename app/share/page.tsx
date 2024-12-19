@@ -109,6 +109,8 @@ const SharePage = () => {
           })
         )
         .finally(() => setLoading(false));
+    } else {
+      setLoading(false)
     }
   }, [id]);
 
@@ -127,17 +129,17 @@ const SharePage = () => {
               {/* <img src="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/svg.png" className='h-[100%] w-[100vw]  absolute left-[50%] bottom-0 translate-x-[-50%]' alt="" /> */}
               <motion.img
                 src={data?.profilePic}
-                alt=" "
+                alt="profile-pic"
                 className="mt-12 w-44 h-44 rounded-full z-10 sm:w-48 sm:h-48"
                 initial={{
                   opacity: 0,
-                  y: "35px",
+                  y: "50px",
                 }}
                 animate={!loading && {
                   opacity: 1,
                   y: 0,
                   transition: {
-                    duration: 0.5,
+                    duration: 0.6,
                   },
                 }}
               />
@@ -175,7 +177,7 @@ const SharePage = () => {
                               href={item.siteURL}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="w-12 h-12 flex justify-center items-center rounded-full mx-1 shadow-md bg-gradient-to-br from-[#f5f7fa] to-[#c3cfe2] hover:shadow-[inset_0px_0px_50px_1px_#81e6d9]"
+                              className="w-12 h-12 flex justify-center items-center rounded-full mx-1 shadow-md bg-white"
                               variants={itemVariants}
                               whileHover={{ scale: 1.2 }}
                             >

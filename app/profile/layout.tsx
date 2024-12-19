@@ -50,7 +50,7 @@ export default function RootLayout({
                 alt="profile pic"
                 width={64}
                 height={64}
-                className="rounded-full"
+                className="rounded-full w-[64px] h-[64px] aspect-square"
                 unoptimized={user.profilePic.includes('.gif') ? true : false}
               />
 

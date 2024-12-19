@@ -29,7 +29,7 @@ export function UploadImage({ user, setUser }: { user: userType, setUser: React.
         formData.append('image', file)
 
         axios.post(`/api/profile/upload?id=${user.id}`, formData).then((e) => {
-            if (e.data.status > 400) {
+            if (e.data.status >= 400) {
                 toast({
                     title: 'Error.',
                     description: 'Error occured.'

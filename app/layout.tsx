@@ -52,7 +52,7 @@ export default function RootLayout({
           {/* </header> */}
           <Link
             href={"/"}
-            className="fixed top-3 left-7 text-3xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed [lg:leading-snug] z-50 "
+            className="fixed top-3 left-7 text-3xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed [lg:leading-snug] z-50"
           >
             <Image
               src={

@@ -37,10 +37,10 @@ export default function LogInForm() {
           password: passwordVal
         }, { withCredentials: true }).then(e => {
           const data = e.data
-          if (data.status === 400) {
+          if (data.status >= 400) {
             toast({
               title: 'Error',
-              description: data.msg
+              description: 'Error occured.'
             })
           } else {
             setUser({

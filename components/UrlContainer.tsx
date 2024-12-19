@@ -65,7 +65,7 @@ const UrlContainer = ({
 
   return (
     <div
-      className={`relative mt-6 w-full overflow-x-auto border-2 border-gray-700 shadow-md rounded-lg ${
+      className={`relative mt-6 w-full overflow-x-auto border-2 border-gray-700 shadow-md rounded-lg custom:border-none ${
         user.isLoggedin ? "" : "border-none"
       }`}
     >
@@ -91,7 +91,7 @@ const UrlContainer = ({
             setUserLinks(updateOrder);
           }}
           values={userLinks}
-          className="px-6 py-2 custom-2:px-3 custom-2:py-0 custom:!px-2"
+          className="px-6 py-2 custom-2:px-3 custom-2:py-0 custom:!px-0"
         >
           {/* <DropArea onDrop={()=> onDrop(0)} /> */}
           {userLinks.map((item: urlType, index: number) => (

@@ -63,7 +63,7 @@ export default function DrawerComp() {
             otp: otpRef.current?.value
         }, { withCredentials: true })
         .then((e)=> {
-            if(e.data.status == 400) {
+            if(e.data.status >= 400) {
                 toast({
                     title: 'Error',
                     description: 'Invalid OTP.'

@@ -2,7 +2,7 @@ import React from "react";
 import { urlType } from "./UrlContainer";
 import { AddLink } from "./AddLink";
 import { IconGripVertical } from "@tabler/icons-react";
-import { Reorder } from "framer-motion";
+import { Reorder, useDragControls } from "framer-motion";
 import Image from "next/image";
 // import { IconTrash } from '@tabler/icons-react';
 
@@ -14,13 +14,22 @@ const UrlCard = ({
   changeUpdate: () => void;
   index: number;
 }) => {
+  const dragControls = useDragControls();
+
   return (
     <Reorder.Item
       value={urlObj}
       id={String(urlObj.id)}
-      className="px-6 py-4 border rounded-lg dark:border-gray-700  hover:backdrop-blur-[2px] cursor-grab flex items-center gap-5 my-3 custom-2:px-3 custom:gap-2"
+      className="px-6 py-4 border rounded-lg dark:border-gray-700 bg-[#00000071] hover:backdrop-blur-[2px] flex items-center gap-5 my-3 custom-2:px-3 custom:gap-2 select-none"
+      dragListener={false}
+      dragControls={dragControls}
     >
-      <IconGripVertical stroke={2} />
+      <IconGripVertical
+        stroke={2}
+        onPointerDown={(e) => dragControls.start(e)}
+        style={{ touchAction: "none" }}
+        className="cursor-grab h-full"
+      />
       <Image
         width={40}
         height={40}

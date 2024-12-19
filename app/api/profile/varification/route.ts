@@ -46,7 +46,8 @@ export async function GET() {
 
     try {
       const info = await transporter.sendMail({
-        from: '"Link Leaf" <otp@linkleaf.work.gd>',
+        // from: '"Link Leaf" <otp@linkleaf.work.gd>',
+        from: '"Link Leaf" <ssayantan84@gmail.com>',
         // to: email,
         to: email,
         subject: "OTP Varification",
