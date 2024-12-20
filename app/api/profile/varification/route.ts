@@ -23,7 +23,24 @@ export async function GET() {
     token.value,
     process.env.JWT_SECRET!
   )) as JwtPayload;
+  
   try {
+    const availableOTP = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        otp: true,
+      },
+    });
+    
+    if(availableOTP?.otp) {
+      return NextResponse.json({
+        status: 200,
+        msg: 'Otp sent.',
+      });
+    }
+
     await prisma.user.update({
       where: {
         id: id,
@@ -32,7 +49,6 @@ export async function GET() {
         otp: otp,
       },
     });
-    // const TOKEN = process.env.MAILTRAP!
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -47,7 +63,7 @@ export async function GET() {
     try {
       const info = await transporter.sendMail({
         // from: '"Link Leaf" <otp@linkleaf.work.gd>',
-        from: '"Link Leaf" <ssayantan84@gmail.com>',
+        from: '"Link Leaf" <link-leaf@sayantan.site>',
         // to: email,
         to: email,
         subject: "OTP Varification",
@@ -75,9 +91,10 @@ export async function GET() {
       if (info.messageId) {
         return NextResponse.json({
           status: 200,
-          msg: info,
+          msg: 'Otp sent.',
         });
       } else {
+        console.log(info)
         return NextResponse.json({
           status: 500,
           msg: "Error in sending message",

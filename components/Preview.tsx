@@ -7,6 +7,7 @@ import Svg from "@/app/share/Svg";
 import { useUserContext } from "@/app/UserContext";
 import { urlType } from "./UrlContainer";
 import { iconSelect } from "@/lib/DropdownValue";
+import '@/app/share/sharePage.css'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -167,11 +168,11 @@ const Preview = ({
                       return (
                         <motion.div
                           key={item.id}
-                          className="linkCard relative flex items-center justify-between my-1 border rounded-full border-gray-500 py-3 px-6 cursor-pointer hover:text-black w-full"
+                          className="linkCard relative flex items-center justify-between my-1 border rounded-full border-gray-500 py-3 px-6 cursor-pointer hover:text-black w-full hover:bg-white"
                           variants={divItemVariants}
-                          whileHover={{
-                            backgroundColor: "white",
-                          }}
+                          // whileHover={{
+                          //   backgroundColor: "white",
+                          // }}
                         >
                           <a
                             href={item.siteURL}
@@ -186,7 +187,8 @@ const Preview = ({
                               className="rounded-sm"
                             />
                             <p className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                              {item.description}
+                              {item.siteName}
+                              {/* {item.description} */}
                             </p>
                           </a>
                           <div className="w-[70px] mr-2">

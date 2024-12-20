@@ -25,17 +25,8 @@ const UrlContainer = ({
   setUserLinks: React.Dispatch<React.SetStateAction<urlType[]>>;
 }) => {
   const { user } = useUserContext();
-  const reorderRef = useRef(false);
+  const reorderRef = useRef<urlType[]>([]); // Store initial order
   const fetchTimer = useRef<ReturnType<typeof setTimeout>>();
-  // const [activeCard, setActiveCard] = useState<number | null>(null);
-
-  // const onDrop = (index:number) => {
-  //   if (activeCard == index || !activeCard) return null
-  //   const newLinks = [...userLinks]
-  //   const [card] = newLinks.splice(activeCard, 1)
-  //   newLinks.splice(index, 0, card)
-  //   setUserLinks(newLinks)
-  // };
 
   const updateOrderApiCall = useCallback(async () => {
     const { data } = await axios.put(
@@ -43,25 +34,22 @@ const UrlContainer = ({
       userLinks
     );
     console.log(data);
-    reorderRef.current = false;
-  }, [userLinks]);
-
-  // const updateOrder = (newOrder: urlType[]) => {
-
-  // };
+  }, [userLinks, user.id]);
 
   useEffect(() => {
-    // console.log(userLinks);
-    clearTimeout(fetchTimer.current);
-    if (reorderRef.current) {
-      fetchTimer.current = setTimeout(() => {
-        updateOrderApiCall();
-      }, 2000);
-      reorderRef.current = false;
+    if (reorderRef.current.length === 0 && userLinks.length > 0) {
+      reorderRef.current = [...userLinks]; // Store initial order
     }
-
-    return () => clearTimeout(fetchTimer.current);
   }, [userLinks]);
+
+  const checkChanges = (oldOrder: urlType[], newOrder: urlType[]) => {
+    for (let i = 0; i < oldOrder.length; i++) {
+      if (oldOrder[i].id !== newOrder[i].id) {
+        return true; // Order changed
+      }
+    }
+    return false;
+  };
 
   return (
     <div
@@ -69,10 +57,6 @@ const UrlContainer = ({
         user.isLoggedin ? "" : "border-none"
       }`}
     >
-      {/* {
-        !user.isLoggedin ? (
-          <p className='text-2xl  tracking-widest text-center pt-10'>You are being redirected ...</p>
-        ) : ( */}
       {loading ? (
         <div className="h-28">
           <Loader />
@@ -83,17 +67,27 @@ const UrlContainer = ({
         <Reorder.Group
           axis="y"
           onReorder={(newOrder) => {
-            reorderRef.current = true;
-            const updateOrder = newOrder.map((item, index) => ({
+            clearTimeout(fetchTimer.current);
+            
+            const updatedOrder = newOrder.map((item, index) => ({
               ...item,
               sortOrder: index + 1,
             }));
-            setUserLinks(updateOrder);
+
+            setUserLinks(updatedOrder);
+
+            fetchTimer.current = setTimeout(() => {
+              if (checkChanges(reorderRef.current, updatedOrder)) {
+                updateOrderApiCall();
+                reorderRef.current = updatedOrder;
+              } else {
+                console.log("No API call, order is the same");
+              }
+            }, 2000);
           }}
           values={userLinks}
           className="px-6 py-2 custom-2:px-3 custom-2:py-0 custom:!px-0"
         >
-          {/* <DropArea onDrop={()=> onDrop(0)} /> */}
           {userLinks.map((item: urlType, index: number) => (
             <UrlCard
               key={item.id}

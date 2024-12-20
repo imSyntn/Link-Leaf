@@ -25,6 +25,7 @@ const Footer = () => {
             href="https://github.com/imSyntn/Link-Leaf"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit Github"
           >
             <SiGithub className="text-gray-500 hover:text-white text-[35px] transition-all duration-300" />
           </a>
@@ -32,6 +33,7 @@ const Footer = () => {
             href="https://www.linkedin.com/in/imsyntn/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit Linkedin"
           >
             <FaLinkedin className="text-gray-500 hover:text-white text-[35px] transition-all duration-300" />
           </a>
@@ -39,6 +41,7 @@ const Footer = () => {
             href="https://twitter.com/imSyntn"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit Twitter"
           >
             <FaXTwitter className="text-gray-500 hover:text-white text-[35px] transition-all duration-300" />
           </a>
@@ -46,6 +49,7 @@ const Footer = () => {
             href="https://github.com/sponsors/imSyntn"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Be a sponsor."
           >
             <FaRegHeart className="text-gray-500 hover:text-red-400 text-[35px] transition-all duration-300" />
           </a>

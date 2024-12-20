@@ -130,7 +130,7 @@ const SharePage = () => {
               <motion.img
                 src={data?.profilePic}
                 alt="profile-pic"
-                className="mt-12 w-44 h-44 rounded-full z-10 sm:w-48 sm:h-48"
+                className="mt-12 w-44 h-44 rounded-full z-10 sm:w-48 sm:h-48 object-cover"
                 initial={{
                   opacity: 0,
                   y: "50px",
@@ -180,6 +180,7 @@ const SharePage = () => {
                               className="w-12 h-12 flex justify-center items-center rounded-full mx-1 shadow-md bg-white"
                               variants={itemVariants}
                               whileHover={{ scale: 1.2 }}
+                              aria-label={`Visit ${item.siteName}`}
                             >
                               <Icon className="text-black text-3xl" />
                             </motion.a>
@@ -217,7 +218,7 @@ const SharePage = () => {
                                   width={40}
                                   height={40}
                                   src={`https://www.google.com/s2/favicons?domain=${item.siteURL}&sz=128`}
-                                  alt={item.siteName}
+                                  alt={`Favicon of ${item.siteName}`}
                                   className="rounded-sm"
                                 />
                                 <p className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
