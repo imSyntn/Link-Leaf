@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { navItemsType } from "./NavBar";
 import Link from "next/link";
-import { useUserContext } from "@/app/UserContext";
-import LogoutBtn from "./LogoutBtn";
+// import { useUserContext } from "@/app/UserContext";
+// import LogoutBtn from "./LogoutBtn";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconX, IconMenu2 } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
@@ -25,7 +25,7 @@ const containerVatients = {
 
 const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const { user, setUser } = useUserContext();
+  // const { user, setUser } = useUserContext();
   const pathname = usePathname();
 
   return (
@@ -39,7 +39,7 @@ const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="absolute top-[-20px] right-[-20px] w-96 h-96 rounded-2xl bg-[#00000077] backdrop-blur-lg flex flex-col items-center justify-center gap-5"
+            className="absolute top-[-20px] right-[-20px] w-96 h-96 rounded-2xl bg-[#000000eb] flex flex-col items-center justify-center gap-5"
             variants={containerVatients}
             initial="hidden"
             animate="visible"
@@ -58,13 +58,13 @@ const HamburgerMenu = ({ navItems }: { navItems: navItemsType[] }) => {
                 {item.name}
               </Link>
             ))}
-            {user.isLoggedin && (
+            {/* {user.isLoggedin && (
               <LogoutBtn
                 user={user}
                 setUser={setUser}
                 classNames="relative top-[0px] right-[0px]"
               />
-            )}
+            )} */}
           </motion.div>
         )}
       </AnimatePresence>

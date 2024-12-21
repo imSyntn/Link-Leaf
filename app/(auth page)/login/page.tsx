@@ -39,8 +39,8 @@ export default function LogInForm() {
           const data = e.data
           if (data.status >= 400) {
             toast({
-              title: 'Error',
-              description: 'Error occured.'
+              title: 'Invalid.',
+              description: 'nvalid Email or Password.'
             })
           } else {
             setUser({

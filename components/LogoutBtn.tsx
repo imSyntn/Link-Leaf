@@ -3,7 +3,7 @@ import { userType } from "@/app/UserContext";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 
-const LogoutBtn = ({ user, setUser, classNames }: { user: userType, setUser: React.Dispatch<React.SetStateAction<userType>>, classNames: string }) => {
+const LogoutBtn = ({ user, setUser, classNames }: { user: userType, setUser: React.Dispatch<React.SetStateAction<userType>>, classNames?: string }) => {
 
   const [btnClicked, setBtnClicked] = useState(false);
   const { toast } = useToast();
@@ -34,9 +34,10 @@ const LogoutBtn = ({ user, setUser, classNames }: { user: userType, setUser: Rea
       })
       .finally(() => setBtnClicked(false));
   };
-  return (
+  return ( 
+    // top-5 right-5 
     <button
-      className={`fixed top-5 right-5 px-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent z-[70] ${classNames} ${
+      className={`fixedpx-2 py-1 rounded-md bg-red-500 text-white font-bold transition duration-200 hover:bg-red-600 hover:text-white border-2 border-transparent z-[70] ${classNames} ${
         btnClicked ? "opacity-50" : ""
       }`}
       onClick={handleLogOut}

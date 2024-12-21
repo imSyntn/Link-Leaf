@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
         }, process.env.JWT_SECRET!)
 
         const response = NextResponse.json({
+            status: 200,
             name: isAvailable.name,
             id: isAvailable.id,
             userName: isAvailable.userName,

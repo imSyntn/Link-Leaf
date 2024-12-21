@@ -51,7 +51,7 @@ export default function RootLayout({
                 width={64}
                 height={64}
                 className="rounded-full w-[64px] h-[64px] aspect-square"
-                unoptimized={user.profilePic.includes('.gif') ? true : false}
+                unoptimized={user.profilePic.includes(".gif") ? true : false}
               />
 
               <div className="text flex flex-col items-center">
@@ -68,7 +68,7 @@ export default function RootLayout({
 
               {/* </p> */}
             </div>
-            <div className="flex justify-end gap-2 nameBtns">
+            <div className="flex justify-center flex-wrap gap-2 nameBtns">
               <AddLink
                 buttonText="Edit Profile"
                 delBtn={false}
@@ -77,9 +77,13 @@ export default function RootLayout({
                 editProfile={true}
               />
               <UploadImage user={user} setUser={setUser} />
+              <LogoutBtn
+                user={user}
+                setUser={setUser}
+                classNames="px-2"
+              />
             </div>
           </div>
-          <LogoutBtn user={user} setUser={setUser} classNames='hidden sm:block' />
         </>
       )}
       {children}

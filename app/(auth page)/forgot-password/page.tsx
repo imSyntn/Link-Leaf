@@ -165,7 +165,7 @@ export default function LogInForm() {
             </LabelInputContainer>
             {otp && (
               <LabelInputContainer className="mb-4">
-                <Label htmlFor="password">Enter new Password</Label>
+                <Label htmlFor="otp">Enter OTP</Label>
                 <Input
                   id="otp"
                   placeholder="- - - - - -"
