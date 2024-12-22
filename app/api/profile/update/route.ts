@@ -81,7 +81,20 @@ export async function PUT(request: NextRequest) {
     });
   }
 
+  // console.log(userLinks)
+
   try {
+
+    // for(const update of userLinks) {
+    //   await prisma.link.update({
+    //     where: {
+    //       id: update.id,
+    //     },
+    //     data: {
+    //       sortOrder: update.sortOrder
+    //     }
+    //   })
+    // }
     await prisma.$queryRawUnsafe(`
     UPDATE "Link"
     SET "sortOrder" = CASE "id"

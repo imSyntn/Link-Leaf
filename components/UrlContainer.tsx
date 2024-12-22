@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useUserContext } from "@/app/UserContext";
 import UrlCard from "./UrlCard";
 import Loader from "./Loader";
@@ -25,27 +25,46 @@ const UrlContainer = ({
   setUserLinks: React.Dispatch<React.SetStateAction<urlType[]>>;
 }) => {
   const { user } = useUserContext();
-  const reorderRef = useRef<urlType[]>([]); // Store initial order
-  const fetchTimer = useRef<ReturnType<typeof setTimeout>>();
-
-  const updateOrderApiCall = useCallback(async () => {
-    const { data } = await axios.put(
-      `/api/profile/update?id=${user.id}`,
-      userLinks
-    );
-    console.log(data);
-  }, [userLinks, user.id]);
+  const reorderRef = useRef<urlType[]>([]);
+  const fetchTimer = useRef<ReturnType <typeof setTimeout>>();
 
   useEffect(() => {
-    if (reorderRef.current.length === 0 && userLinks.length > 0) {
-      reorderRef.current = [...userLinks]; 
+    clearTimeout(fetchTimer.current);
+
+    if (checkChanges(reorderRef.current, userLinks)) {
+      fetchTimer.current = setTimeout(() => {
+        const updatedOrder = userLinks.map((item, index) => ({
+          ...item,
+          sortOrder: index + 1,
+        }));
+        const updateOrderApiCall = async () => {
+          const { data } = await axios.put(
+            `/api/profile/update?id=${user.id}`,
+            updatedOrder
+          );
+          console.log(data);
+        };
+        updateOrderApiCall();
+        reorderRef.current = updatedOrder
+      }, 2000);
+    }
+
+    return () => clearTimeout(fetchTimer.current);
+  }, [userLinks]);
+
+  useEffect(() => {
+    if (
+      (reorderRef.current.length === 0 && userLinks.length > 0) ||
+      reorderRef.current.length != userLinks.length
+    ) {
+      reorderRef.current = [...userLinks];
     }
   }, [userLinks]);
 
   const checkChanges = (oldOrder: urlType[], newOrder: urlType[]) => {
     for (let i = 0; i < oldOrder.length; i++) {
       if (oldOrder[i].id !== newOrder[i].id) {
-        return true; 
+        return true;
       }
     }
     return false;
@@ -67,23 +86,18 @@ const UrlContainer = ({
         <Reorder.Group
           axis="y"
           onReorder={(newOrder) => {
-            clearTimeout(fetchTimer.current);
-            
-            const updatedOrder = newOrder.map((item, index) => ({
-              ...item,
-              sortOrder: index + 1,
-            }));
+            // clearTimeout(fetchTimer.current);
 
-            setUserLinks(updatedOrder);
+            setUserLinks(newOrder);
 
-            fetchTimer.current = setTimeout(() => {
-              if (checkChanges(reorderRef.current, updatedOrder)) {
-                updateOrderApiCall();
-                reorderRef.current = updatedOrder;
-              } else {
-                console.log("No API call, order is the same");
-              }
-            }, 2000);
+            // fetchTimer.current = setTimeout(() => {
+            //   // if (checkChanges(reorderRef.current, updatedOrder)) {
+            //     updateOrderApiCall();
+            //     // reorderRef.current = updatedOrder;
+            //   // } else {
+            //   //   console.log("No API call, order is the same");
+            //   // }
+            // }, 2000);
           }}
           values={userLinks}
           className="px-6 py-2 custom-2:px-3 custom-2:py-0 custom:!px-0"

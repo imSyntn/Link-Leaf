@@ -36,7 +36,7 @@ export default function RootLayout({
         property="og:description"
         content="Your all-in-one hub to organize and share links effortlessly."
       />
-      {/* <meta property="og:url" content="https://www.imdb.com/title/tt0117500/" /> */}
+      <meta property="og:url" content="https://link-leaf.sayantan.site" />
       <meta
         property="og:image"
         content="https://raw.githubusercontent.com/imSyntn/Static-Files/refs/heads/main/Screenshot%202024-11-27%20180817.png"

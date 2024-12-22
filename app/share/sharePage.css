@@ -1,5 +1,5 @@
 .linkCard {
-  transition: all 0.5s;
+  transition: none;
 }
 .linkCard:hover {
   background-color: rgb(255, 255, 255) !important;

@@ -36,19 +36,15 @@ export function Navbar() {
   // },[pathname])
 
   return (
-    <div className="fixed top-0 left-0 z-40 h-[70px] backdrop-blur-sm w-full bg-[#00000017]">
-      {
-        pathname !== "/share" && (
-        <>
-          <FloatingNav
-            navItems={navItems}
-            pathname={pathname}
-            className="min-h-[55.2px] hidden sm:flex"
-          />
-          <HamburgerMenu navItems={navItems} />
-        </>
-      )
-    }
-    </div>
+    pathname !== "/share" && (
+      <div className="fixed top-0 left-0 z-40 h-[70px] backdrop-blur-sm w-full bg-[#00000017]">
+        <FloatingNav
+          navItems={navItems}
+          pathname={pathname}
+          className="min-h-[55.2px] hidden sm:flex"
+        />
+        <HamburgerMenu navItems={navItems} />
+      </div>
+    )
   );
 }

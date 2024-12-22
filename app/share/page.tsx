@@ -222,7 +222,7 @@ const SharePage = () => {
                                   className="rounded-sm"
                                 />
                                 <p className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                  {item.description}
+                                  {item.siteName}
                                 </p>
                               </a>
                               <div className="w-[70px] mr-2">
@@ -264,7 +264,7 @@ const SharePage = () => {
           </>
         ) : (
           <p className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-nowrap text-2xl">
-            No users available ...
+            User not available ...
           </p>
         )}
       </div>
