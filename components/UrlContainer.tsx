@@ -38,14 +38,14 @@ const UrlContainer = ({
 
   useEffect(() => {
     if (reorderRef.current.length === 0 && userLinks.length > 0) {
-      reorderRef.current = [...userLinks]; // Store initial order
+      reorderRef.current = [...userLinks]; 
     }
   }, [userLinks]);
 
   const checkChanges = (oldOrder: urlType[], newOrder: urlType[]) => {
     for (let i = 0; i < oldOrder.length; i++) {
       if (oldOrder[i].id !== newOrder[i].id) {
-        return true; // Order changed
+        return true; 
       }
     }
     return false;
