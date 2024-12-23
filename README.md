@@ -49,6 +49,7 @@ Link Leaf is a modern platform designed to help users organize and share links e
 
 - Run
   ```bash
+    npx prisma migrate dev --name init
     npm run dev
   ```
 
