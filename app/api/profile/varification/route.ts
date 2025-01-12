@@ -34,21 +34,29 @@ export async function GET() {
       },
     });
     
-    if(availableOTP?.otp) {
-      return NextResponse.json({
-        status: 200,
-        msg: 'Otp sent.',
+    if(!availableOTP?.otp) {
+      // return NextResponse.json({
+      //   status: 200,
+      //   msg: 'Otp sent.',
+      // });
+      await prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          otp: otp,
+        },
       });
     }
 
-    await prisma.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        otp: otp,
-      },
-    });
+    // await prisma.user.update({
+    //   where: {
+    //     id: id,
+    //   },
+    //   data: {
+    //     otp: otp,
+    //   },
+    // });
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -89,6 +97,7 @@ export async function GET() {
         `,
       });
       if (info.messageId) {
+        console.log(info)
         return NextResponse.json({
           status: 200,
           msg: 'Otp sent.',
