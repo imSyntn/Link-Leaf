@@ -11,8 +11,6 @@ export async function GET() {
   const cookieBucket = await cookies();
   const token = cookieBucket.get("token");
 
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
   if (!token)
     return NextResponse.json({
       status: 400,
@@ -23,21 +21,29 @@ export async function GET() {
     token.value,
     process.env.JWT_SECRET!
   )) as JwtPayload;
-  
+  let otp = Math.floor(100000 + Math.random() * 900000).toString();
+
   try {
-    const existingUser = await prisma.user.findUnique({
-      where: { id },
+    const availableOTP = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        otp: true,
+      },
     });
 
-    if (!existingUser) {
-      return NextResponse.json({ status: 404, msg: "User not found" });
-    }
-
-    if (!existingUser.otp) {
+    if (!availableOTP?.otp) {
       await prisma.user.update({
-        where: { id },
-        data: { otp },
+        where: {
+          id: id,
+        },
+        data: {
+          otp: otp,
+        },
       });
+    } else {
+      otp = availableOTP.otp
     }
 
     const transporter = nodemailer.createTransport({
@@ -74,13 +80,26 @@ export async function GET() {
         </body>
       `,
     });
-
-    console.log("Email sent successfully:", info);
-
-    return NextResponse.json({ status: 200, msg: "OTP sent successfully." });
+    if (info.messageId) {
+      return NextResponse.json({
+        status: 200,
+        msg: "Otp sent.",
+      });
+    } else {
+      console.log(info);
+      return NextResponse.json({
+        status: 500,
+        msg: "Error in sending message",
+        // msg: error,
+      });
+    }
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json({ status: 500, msg: "Internal server error.", error: error });
+    return NextResponse.json({
+      status: 500,
+      msg: "Internal server error.",
+      error: error,
+    });
   }
 }
 
